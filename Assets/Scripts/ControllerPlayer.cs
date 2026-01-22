@@ -1,15 +1,23 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class ControllerPlayer : Controller
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    //Input system
+    PlayerInput pI;
 
-    // Update is called once per frame
-    void Update()
+    InputAction rotateTank;
+    InputAction moveTank;
+    InputAction fire;
+
+    Rigidbody rbTank;
+
+    //Attributes
+
+    [SerializeField] float tankSpeed;
+
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Awake()
     {
         
     }
@@ -18,9 +26,37 @@ public class ControllerPlayer : Controller
     {
         //TODO: Write the logic of the player here
 
-        if (Input.GetKeyDown(KeyCode.F))
+        if (rotateTank.IsPressed())
         {
-            Debug.Log("Hello");
+            float rotation = rotateTank.ReadValue<float>();
+
+            pawn.gameObject.transform.Rotate(0, rotation, 0);
+            //Debug.Log("REEEEE");
         }
+
+        if (moveTank.IsPressed())
+        {
+            float moveVal = moveTank.ReadValue<float>();
+
+            rbTank.linearVelocity = pawn.gameObject.transform.TransformDirection((Vector3.forward * moveVal) * tankSpeed);
+        }
+
+        if (fire.WasPressedThisFrame())
+        {
+            Debug.Log("IMMA FIRIN MY LAZAR");
+        }
+    }
+
+    public override void SetupControls()
+    {
+        rbTank = pawn.rb;
+
+        pI = GetComponent<PlayerInput>(); //Gets the player Input and actions
+
+        rotateTank = pI.actions.FindAction("Rotate");
+
+        moveTank = pI.actions.FindAction("Movement");
+
+        fire = pI.actions.FindAction("Fire");
     }
 }

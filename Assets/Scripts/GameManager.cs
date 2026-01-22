@@ -24,7 +24,8 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        // Have Player One connect to a pawn
+        // Have Player One connect to a pawn and load in their controls
         playerOne.Possess(startPawn);
+        playerOne.SetupControls();
     }
 }
