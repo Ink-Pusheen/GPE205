@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 public class ControllerPlayer : Controller
 {
     //Input system
-    PlayerInput pI;
+    [SerializeField] PlayerInput pI;
 
     InputAction rotateTank;
     InputAction moveTank;
@@ -29,16 +29,20 @@ public class ControllerPlayer : Controller
         if (rotateTank.IsPressed())
         {
             float rotation = rotateTank.ReadValue<float>();
+            Vector3 rotateInput = new Vector3(rotation, 0, 0);
 
-            pawn.gameObject.transform.Rotate(0, rotation, 0);
+            pawn.Rotate(rotateInput);
+            //pawn.gameObject.transform.Rotate(0, rotation, 0);
             //Debug.Log("REEEEE");
         }
 
         if (moveTank.IsPressed())
         {
             float moveVal = moveTank.ReadValue<float>();
+            Vector3 directionInput = new Vector3(0, moveVal, 0);
 
-            rbTank.linearVelocity = pawn.gameObject.transform.TransformDirection((Vector3.forward * moveVal) * tankSpeed);
+            pawn.Move(directionInput);
+            //rbTank.linearVelocity = pawn.gameObject.transform.TransformDirection((Vector3.forward * moveVal));
         }
 
         if (fire.WasPressedThisFrame())
