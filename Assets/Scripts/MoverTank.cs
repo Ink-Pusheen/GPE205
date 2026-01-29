@@ -12,7 +12,7 @@ public class MoverTank : Mover
 
     public override void Move(Vector2 moveInput)
     {
-        transform.forward += new Vector3(moveInput.x, 0, moveInput.y) * (pawn.moveSpeed * Time.deltaTime);
+        transform.position += transform.TransformDirection(new Vector3(0, 0, moveInput.y) * (pawn.moveSpeed * Time.deltaTime));
     }
 
     public override void Rotate(Vector2 rotateInput)

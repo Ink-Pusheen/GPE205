@@ -13,11 +13,15 @@ public abstract class Pawn : MonoBehaviour
     public abstract void Move(Vector3 moveDirection);
     public abstract void Rotate(Vector3 rotateDirection);
 
+    public abstract void Start();
+
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
 
         mover = GetComponent<Mover>();
     }
+
+    
 
 }

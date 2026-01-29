@@ -22,6 +22,21 @@ public class ControllerPlayer : Controller
         
     }
 
+    private void Start()
+    {
+        //Enable inputs
+        pI.enabled = true;
+
+        //Add controller to gamemanager
+        GameManager.instance.players.Add(this);
+    }
+
+    private void OnDestroy()
+    {
+        //Remove this from the gamemanager
+        GameManager.instance.players.Remove(this);
+    }
+
     public override void MakeDecisions()
     {
         //TODO: Write the logic of the player here
@@ -40,7 +55,6 @@ public class ControllerPlayer : Controller
         {
             float moveVal = moveTank.ReadValue<float>();
             Vector3 directionInput = new Vector3(0, moveVal, 0);
-
             pawn.Move(directionInput);
             //rbTank.linearVelocity = pawn.gameObject.transform.TransformDirection((Vector3.forward * moveVal));
         }
