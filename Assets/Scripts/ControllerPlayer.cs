@@ -9,6 +9,7 @@ public class ControllerPlayer : Controller
     InputAction rotateTank;
     InputAction moveTank;
     InputAction fire;
+    InputAction flip;
 
     Rigidbody rbTank;
 
@@ -54,7 +55,7 @@ public class ControllerPlayer : Controller
         if (moveTank.IsPressed())
         {
             float moveVal = moveTank.ReadValue<float>();
-            Vector3 directionInput = new Vector3(0, moveVal, 0);
+            Vector3 directionInput = new Vector3(0, 0, moveVal);
             pawn.Move(directionInput);
             //rbTank.linearVelocity = pawn.gameObject.transform.TransformDirection((Vector3.forward * moveVal));
         }
@@ -62,6 +63,11 @@ public class ControllerPlayer : Controller
         if (fire.WasPressedThisFrame())
         {
             Debug.Log("IMMA FIRIN MY LAZAR");
+        }
+
+        if (flip.WasPressedThisFrame())
+        {
+            pawn.Flip();
         }
     }
 
@@ -76,5 +82,7 @@ public class ControllerPlayer : Controller
         moveTank = pI.actions.FindAction("Movement");
 
         fire = pI.actions.FindAction("Fire");
+
+        flip = pI.actions.FindAction("Flip");
     }
 }

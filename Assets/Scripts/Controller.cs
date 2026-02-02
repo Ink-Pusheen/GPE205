@@ -4,7 +4,7 @@ public abstract class Controller : MonoBehaviour
 {
     public Pawn pawn;
 
-    public void Update()
+    public void FixedUpdate()
     {
         MakeDecisions();
     }

@@ -2,6 +2,11 @@ using UnityEngine;
 
 public class PawnTank : Pawn
 {
+    [SerializeField] bool isGrounded;
+    [SerializeField] float groundedRadius;
+    [SerializeField] GameObject groundCheck;
+    [SerializeField] LayerMask ground;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public override void Start()
     {
@@ -25,12 +30,31 @@ public class PawnTank : Pawn
 
     public override void Rotate(Vector3 rotateDirection)
     {
+        if (!isGrounded) return;
         mover.Rotate(rotateDirection);
+    }
+
+    public override void Flip()
+    {
+        Vector3 eulars = transform.eulerAngles;
+
+        float x = Mathf.Round(transform.rotation.x) % 90f;
+        float z = Mathf.Round(transform.rotation.z) % 90f;
+
+        if (x != 0 || z != 0)
+        {
+            transform.rotation = Quaternion.Euler(0, eulars.y, 0);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        isGrounded = Physics.CheckSphere(groundCheck.transform.position, groundedRadius, ground);
+
+        if (!isGrounded)
+        {
+            rb.linearVelocity = new Vector3(rb.linearVelocity.x, rb.linearVelocity.y, rb.linearVelocity.x);
+        }
     }
 }

@@ -54,7 +54,6 @@ public class GameManager : MonoBehaviour
     {
         GameObject pawnSpawn = Instantiate(prefab, Vector3.zero, Quaternion.identity);
         Pawn tempTankPawn = pawnSpawn.GetComponent<Pawn>();
-        tanks.Add(tempTankPawn);
 
         return tempTankPawn;
     }
@@ -63,7 +62,6 @@ public class GameManager : MonoBehaviour
     {
         GameObject playerSpawn = Instantiate(prefab, Vector3.zero, Quaternion.identity);
         Controller tempPlayerController = playerSpawn.GetComponent<Controller>();
-        players.Add(tempPlayerController);
 
         return tempPlayerController;
     }

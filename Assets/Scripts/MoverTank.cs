@@ -10,9 +10,11 @@ public class MoverTank : Mover
         pawn = GetComponent<Pawn>();
     }
 
-    public override void Move(Vector2 moveInput)
+    public override void Move(Vector3 moveInput)
     {
-        transform.position += transform.TransformDirection(new Vector3(0, 0, moveInput.y) * (pawn.moveSpeed * Time.deltaTime));
+        Vector3 target = pawn.rb.position + transform.TransformDirection(moveInput) * pawn.moveSpeed * Time.fixedDeltaTime;
+
+        pawn.rb.MovePosition((target));
     }
 
     public override void Rotate(Vector2 rotateInput)
