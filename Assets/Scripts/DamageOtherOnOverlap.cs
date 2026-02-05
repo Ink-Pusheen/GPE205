@@ -22,5 +22,8 @@ public class DamageOtherOnOverlap : MonoBehaviour
         {
             hp.TakeDamage(damage);
         }
+
+        //Destroy this gameobject
+        Destroy(gameObject);
     }
 }

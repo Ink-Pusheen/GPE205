@@ -1,3 +1,4 @@
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
 public class ShooterTank : Shooter
@@ -18,11 +19,21 @@ public class ShooterTank : Shooter
 
     public override void Fire()
     {
+        if (Time.time > nextShootTime)
+        {
+            Fire(pawn.shootPower);
+            nextShootTime = Time.time + (1/fireRate); //Inverses the formula from seconds per shot from shots per second
+        }
+        
+    }
+
+    public override void Fire(float power)
+    {
         //Instantiate the bullet at the muzzle and rotation
         GameObject bullet = Instantiate(bulletPrefab, muzzleTransform.position, muzzleTransform.rotation);
 
         //Push it forward
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
-        rb.AddForce(muzzleTransform.forward * pawn.shootPower);
+        rb.AddForce(muzzleTransform.forward * power);
     }
 }

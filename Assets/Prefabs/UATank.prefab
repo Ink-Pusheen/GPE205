@@ -271,11 +271,14 @@ PrefabInstance:
       insertIndex: 2
       addedObject: {fileID: 5569308078735376767}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d4e547d7cd6eba241bd1232e73cc099d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 5258232250231695543}
+      insertIndex: 3
+      addedObject: {fileID: -703879060782124463}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d4e547d7cd6eba241bd1232e73cc099d, type: 3}
+      insertIndex: 4
+      addedObject: {fileID: -1374981754881924713}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d4e547d7cd6eba241bd1232e73cc099d, type: 3}
       insertIndex: -1
-      addedObject: {fileID: -703879060782124463}
+      addedObject: {fileID: 5258232250231695543}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d4e547d7cd6eba241bd1232e73cc099d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4107289394727655458}
@@ -299,9 +302,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PawnTank
   controller: {fileID: 0}
   rb: {fileID: 0}
-  moveSpeed: 5
+  moveSpeed: 3
   rotationSpeed: 120
-  shootPower: 0
+  shootPower: 400
   isGrounded: 0
   groundedRadius: 0.5
   groundCheck: {fileID: 7211863093899300257}
@@ -320,6 +323,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: baa17b2c0e9f19f4f99fe9df098941f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MoverTank
+--- !u!114 &-703879060782124463
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6292994346660287599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1da9f1e02d2c24c4ab5bac3e29f6987d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ShooterTank
+  muzzleTransform: {fileID: 4691397404301650323}
+  bulletPrefab: {fileID: 728272183597579386, guid: ce89f28d0effafa4e85c3a090f23c615, type: 3}
+  fireRate: 1
+  nextShootTime: 0
+  pawn: {fileID: 0}
+--- !u!114 &-1374981754881924713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6292994346660287599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97969e755c1ba604db6000f709a0371c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Health
+  currentHealth: 0
+  maxHealth: 15
 --- !u!54 &5258232250231695543
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -347,21 +381,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &-703879060782124463
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6292994346660287599}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1da9f1e02d2c24c4ab5bac3e29f6987d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ShooterTank
-  muzzleTransform: {fileID: 4691397404301650323}
-  bulletPrefab: {fileID: 728272183597579386, guid: ce89f28d0effafa4e85c3a090f23c615, type: 3}
-  pawn: {fileID: 0}
 --- !u!65 &4107289394727655458
 BoxCollider:
   m_ObjectHideFlags: 0

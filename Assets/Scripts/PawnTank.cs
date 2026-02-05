@@ -7,11 +7,15 @@ public class PawnTank : Pawn
     [SerializeField] GameObject groundCheck;
     [SerializeField] LayerMask ground;
 
+    protected Shooter shooter;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public override void Start()
     {
         //Save tank to gamemanager
         GameManager.instance.tanks.Add(this);
+
+        shooter = GetComponent<Shooter>();
 
         //Do what all pawns do
         base.Start();
@@ -32,6 +36,16 @@ public class PawnTank : Pawn
     {
         if (!isGrounded) return;
         mover.Rotate(rotateDirection);
+    }
+
+    public override void Shoot(float power)
+    {
+        if (Time.time > shooter.nextShootTime)
+        {
+            shooter.Fire(power);
+            shooter.nextShootTime = Time.time + shooter.fireRate;
+        }
+        
     }
 
     public override void Flip()

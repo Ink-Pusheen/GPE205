@@ -62,7 +62,7 @@ public class ControllerPlayer : Controller
 
         if (fire.WasPressedThisFrame())
         {
-            Debug.Log("IMMA FIRIN MY LAZAR");
+            pawn.Shoot(pawn.shootPower);
         }
 
         if (flip.WasPressedThisFrame())
