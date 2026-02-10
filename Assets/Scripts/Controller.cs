@@ -4,6 +4,10 @@ public abstract class Controller : MonoBehaviour
 {
     public Pawn pawn;
 
+    public virtual void Start()
+    {
+    }
+
     public void Update()
     {
         MakeDecisions();
