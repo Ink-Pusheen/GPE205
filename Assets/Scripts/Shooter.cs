@@ -10,7 +10,7 @@ public abstract class Shooter : MonoBehaviour
 
     public Pawn pawn;
 
-    private void Start()
+    private void Awake()
     {
         pawn = GetComponent<Pawn>();
         nextShootTime = Time.time; //I can shoot now

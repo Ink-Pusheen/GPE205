@@ -61,6 +61,11 @@ public class PawnTank : Pawn
         }
     }
 
+    public override void RotateTowards(Vector3 position)
+    {
+        mover.RotateTowards(position);
+    }
+
     // Update is called once per frame
     void Update()
     {

@@ -1,9 +1,15 @@
 using UnityEngine;
 
+public enum States
+{
+
+}
+
 public class ControllerAI_Roamer : ControllerAI
 {
     public override void MakeDecisions()
     {
+        //Look at the current state
         switch (currentState)
         {
             case AIState.ChooseRoamDirection:
@@ -49,8 +55,45 @@ public class ControllerAI_Roamer : ControllerAI
         }
     }
 
+    public void DoChooseRoamDirection()
+    {
+        //TODO: Whatever is in case ChooseRoamDirection
+    }
+
+    public void DoRoam()
+    {
+        //TODO: Whatever is in case Roam
+    }
+
+    public void DoAttack()
+    {
+        //TODO: Whatever is in case Attack
+    }
+
+    public void DoTurnAndShoot()
+    {
+        //TODO:Whatever is in case TurnAndShoot
+    }
+
+    
+
+    public void DoChase()
+    {
+        //TODO: Whatever is in case Chase
+        //Turn towards chase target
+        pawn.RotateTowards(playerTarget.position);
+
+        //Move forward
+        pawn.Move(new Vector3(0, 0, 1));
+    }
+
     public void DoIdle()
     {
         //TODO: Whatever is in case idle
+    }
+
+    public void DoPatrol()
+    {
+        //TODO: Whatever is in case Patrol
     }
 }

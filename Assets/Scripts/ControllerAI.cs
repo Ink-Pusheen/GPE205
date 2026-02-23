@@ -15,6 +15,14 @@ public class ControllerAI : Controller
 
     protected AIState currentState = AIState.Roam;
 
+    public Transform playerTarget;
+
+    public float fleeDistance;
+
+    public float hearingDistance = 10f;
+    public float visionDistance = 10f;
+    public float fovAngle = 60;
+
 
     public override void Start()
     {
@@ -78,4 +86,75 @@ public class ControllerAI : Controller
         return false;
     }
 
+    public bool CanSee(GameObject target)
+    {
+        RaycastHit hit;
+
+        //TODO: Field of view check
+
+
+        Vector3 vectorToTarget = target.transform.position - pawn.transform.position;
+        if (Physics.Raycast(pawn.transform.position, vectorToTarget, out hit, visionDistance))
+        {
+            if (hit.collider.gameObject == target) return true;
+        }
+
+        //Else return false
+        return false;
+    }
+
+    public bool CanHear(GameObject target)
+    {
+        //Check if target has "NoiseMaker"
+        NoiseMaker targetNoiseMaker = target.GetComponent<NoiseMaker>();
+        if(targetNoiseMaker == null) return false;
+
+        //If yes, is there ongoing noise? (>0)
+        if (targetNoiseMaker.noiseVolume > 0)
+        {
+            //If so, is the distance between the two centers smaller than the two radii added together?
+            float totaleDistance = Vector3.Distance(target.transform.position, pawn.transform.position);
+
+            if (totaleDistance <= targetNoiseMaker.noiseVolume + hearingDistance) return true;
+        }
+
+        //Otherwise, return false
+        return false;
+    }
+
+    public void DoChase()
+    {
+        //Find the vector to the player
+        Vector3 targetAngle = playerTarget.position - pawn.transform.position;
+
+        //Move  the calculated direction
+        pawn.Move(targetAngle);
+    }
+
+    public void DoFlee()
+    {
+        //TODO: Whatever is in case Flee
+        //Find a vector to the player
+        Vector3 vectorToTarget = pawn.transform.position - playerTarget.position;
+
+        float distanceToPlayer = vectorToTarget.magnitude; //Distance between
+
+        //Reversal
+        vectorToTarget = -vectorToTarget;
+
+        //Find the distance to flee
+        vectorToTarget.Normalize();
+
+        float percentOfFleeing = distanceToPlayer / fleeDistance;
+        percentOfFleeing = Mathf.Clamp01(percentOfFleeing);
+        float flippedPercentOfFleeing = 1 - percentOfFleeing;
+        float newFleeDistance = flippedPercentOfFleeing * fleeDistance;
+
+        Vector3 targetPos = pawn.transform.position + (vectorToTarget * newFleeDistance);
+    }
+
+    public void FindPickup()
+    {
+        //TODO: Find the nearest pickup
+    }
 }

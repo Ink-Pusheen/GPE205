@@ -35,5 +35,8 @@ public class ShooterTank : Shooter
         //Push it forward
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
         rb.AddForce(muzzleTransform.forward * power);
+
+        //Set the owner
+        bullet.GetComponent<Projectile>().setOwner(pawn.gameObject);
     }
 }
