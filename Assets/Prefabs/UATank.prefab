@@ -266,15 +266,18 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d4e547d7cd6eba241bd1232e73cc099d, type: 3}
       insertIndex: 1
-      addedObject: {fileID: 6235992647963632733}
+      addedObject: {fileID: 7585026945707816769}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d4e547d7cd6eba241bd1232e73cc099d, type: 3}
       insertIndex: 2
-      addedObject: {fileID: 5569308078735376767}
+      addedObject: {fileID: 6235992647963632733}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d4e547d7cd6eba241bd1232e73cc099d, type: 3}
       insertIndex: 3
-      addedObject: {fileID: -703879060782124463}
+      addedObject: {fileID: 5569308078735376767}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d4e547d7cd6eba241bd1232e73cc099d, type: 3}
       insertIndex: 4
+      addedObject: {fileID: -703879060782124463}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d4e547d7cd6eba241bd1232e73cc099d, type: 3}
+      insertIndex: 5
       addedObject: {fileID: -1374981754881924713}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d4e547d7cd6eba241bd1232e73cc099d, type: 3}
       insertIndex: -1
@@ -288,6 +291,18 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: d4e547d7cd6eba241bd1232e73cc099d, type: 3}
   m_PrefabInstance: {fileID: 6599001427563473214}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7585026945707816769
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6292994346660287599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62b4e4e1ba7587b4ebd1bb76243953fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PowerupManager
 --- !u!114 &6235992647963632733
 MonoBehaviour:
   m_ObjectHideFlags: 0
