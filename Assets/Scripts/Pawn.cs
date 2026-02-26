@@ -4,6 +4,7 @@ public abstract class Pawn : MonoBehaviour
 {
     [HideInInspector] public Controller controller;
     protected Mover mover;
+    [HideInInspector] public Health health;
 
     public Rigidbody rb;
 
@@ -23,6 +24,8 @@ public abstract class Pawn : MonoBehaviour
         rb = GetComponent<Rigidbody>();
 
         mover = GetComponent<Mover>();
+
+        health = GetComponent<Health>();
     }
 
     void Awake()
