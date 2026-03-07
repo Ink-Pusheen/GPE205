@@ -240,13 +240,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f0b1c1a51a8e9d449533c1abf72dd0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MapGenerator
+  randomType: 0
+  seed: 235124
   availableTiles:
   - {fileID: 650201141377388768, guid: bb3d5f4bb49467f43a7e17e2c644588d, type: 3}
   - {fileID: 4141607229881774664, guid: 6bda7274ae0a55546a09de25e429c551, type: 3}
   tileWidth: 25
   tileLength: 25
-  mapColumns: 5
-  mapRows: 2
+  mapColumns: 15
+  mapRows: 15
 --- !u!4 &1752435375
 Transform:
   m_ObjectHideFlags: 0

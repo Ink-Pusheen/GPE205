@@ -3,6 +3,10 @@ using UnityEngine;
 
 public class MapGeneratorLogic
 {
+    [Header("SeedLogic")]
+    public int seed = 235124;
+
+    [Header("TileLogic")]
     public List<Tile> availableTiles = new List<Tile>();
 
     public float tileWidth;
