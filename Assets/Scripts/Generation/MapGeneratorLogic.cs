@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+[Serializable]
 public class MapGeneratorLogic
 {
     [Header("SeedLogic")]
@@ -8,9 +10,13 @@ public class MapGeneratorLogic
 
     [Header("TileLogic")]
     public List<Tile> availableTiles = new List<Tile>();
+    public List<Tile> generatedTiles = new List<Tile>();
 
     public float tileWidth;
     public float tileLength;
+
+    public int mapSize;
+    public int generatedTilesCount;
 
     public int mapColumns;
     public int mapRows;
@@ -24,7 +30,7 @@ public class MapGeneratorLogic
 
     public Tile GenerateTile()
     {
-        int chosenTile = Random.Range(0, availableTiles.Count);
+        int chosenTile = UnityEngine.Random.Range(0, availableTiles.Count);
 
         return availableTiles[chosenTile];
     }

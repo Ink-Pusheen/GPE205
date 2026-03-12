@@ -244,22 +244,10 @@ MonoBehaviour:
   seed: 235124
   availableTiles:
   - {fileID: 650201141377388768, guid: bb3d5f4bb49467f43a7e17e2c644588d, type: 3}
-  - {fileID: 650201141377388768, guid: 39bc2d1fc97392d4dab6ec74053eb881, type: 3}
-  - {fileID: 650201141377388768, guid: bbc49e25932f9b542865184331ae0bcd, type: 3}
   tileWidth: 25
   tileLength: 25
   mapColumns: 15
   mapRows: 15
-  mapLogic:
-    seed: 235124
-    availableTiles: []
-    generatedTiles: []
-    tileWidth: 0
-    tileLength: 0
-    mapSize: 30
-    generatedTilesCount: 0
-    mapColumns: 0
-    mapRows: 0
 --- !u!4 &1752435375
 Transform:
   m_ObjectHideFlags: 0
