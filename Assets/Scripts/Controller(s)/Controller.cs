@@ -20,7 +20,7 @@ public abstract class Controller : MonoBehaviour
     {
         pawnToPossess.controller = this;
         this.pawn = pawnToPossess;
-        Debug.Log(pawnToPossess);
+        //Debug.Log(pawnToPossess);
     }
 
     public void Unpossess()

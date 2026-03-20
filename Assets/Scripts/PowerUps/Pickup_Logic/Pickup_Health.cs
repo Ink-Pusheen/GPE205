@@ -6,8 +6,14 @@ public class Pickup_Health : Pickup
 {
     public PowerUp_Health pickup;
 
-    public override void ApplyPowerup(PowerupManager PUM)
+    public override void ApplyPowerup(PowerupManager PUM, GameObject pickupHost)
     {
-        PUM.ApplyPowerup(pickup);
+        bool fullHealth = pickup.CanHeal(PUM.pawn);
+        Debug.Log("Colliding tank is full health: " + fullHealth);
+        if (!fullHealth)
+        {
+            PUM.ApplyPowerup(pickup);
+            Destroy(pickupHost);
+        }
     }
 }

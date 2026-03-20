@@ -4,8 +4,9 @@ public class Pickup_SpeedBoost : Pickup
 {
     public PowerUp_MoveSpeed pickup;
 
-    public override void ApplyPowerup(PowerupManager PUM)
+    public override void ApplyPowerup(PowerupManager PUM, GameObject pickupHost)
     {
         PUM.ApplyPowerup(pickup);
+        Destroy(pickupHost);
     }
 }

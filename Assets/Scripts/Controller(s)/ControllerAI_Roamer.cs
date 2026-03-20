@@ -13,33 +13,44 @@ public class ControllerAI_Roamer : ControllerAI
         switch (currentState)
         {
             case AIState.ChooseRoamDirection:
-                //
+                //Rotate towards a certain direction if player is not in sight
+
                 //Check for transitions
+
                 break;
 
             case AIState.Roam:
                 //Rotate to that direction and move forward
+
                 //Check for transitions
+
                 break;
 
             case AIState.Attack:
                 //Turn towards the player and fire
+
                 //Check for transitions
                 if (!CanMoveForward(5)) ChangeState(AIState.Roam);
                 break;
 
             case AIState.TurnAndShoot:
-                //
+                //Turn towards the player then attack
+
                 //Check for transitions
+
                 break;
 
             case AIState.Flee:
-                //
+                //Flee away from the player
+                DoFlee();
                 //Check for transitions
+
                 break;
 
             case AIState.Chase:
                 //
+                DoChase();
+
                 //Check for transitions
                 break;
 
@@ -77,15 +88,15 @@ public class ControllerAI_Roamer : ControllerAI
 
     
 
-    public void DoChase()
-    {
-        //TODO: Whatever is in case Chase
-        //Turn towards chase target
-        pawn.RotateTowards(playerTarget.position);
+    //public void DoChase()
+    //{
+    //    //TODO: Whatever is in case Chase
+    //    //Turn towards chase target
+    //    pawn.RotateTowards(playerTarget.position);
 
-        //Move forward
-        pawn.Move(new Vector3(0, 0, 1));
-    }
+    //    //Move forward
+    //    pawn.Move(new Vector3(0, 0, 1));
+    //}
 
     public void DoIdle()
     {

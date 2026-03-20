@@ -510,6 +510,7 @@ Transform:
   - {fileID: 4455625193746593177}
   - {fileID: 5981315567774491210}
   - {fileID: 6187028414379881636}
+  - {fileID: 2862975970638029740}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &650201141377388768
@@ -524,22 +525,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23a241b3ca7c8c74a93102b68799a475, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Tile
-  tileSize: 27
-  overlapSize: {x: 27, y: 5, z: 27}
-  spawnLocations:
-  - {fileID: 8769341170660512484}
-  - {fileID: 3678422605895144164}
-  - {fileID: 8278786816091727828}
-  - {fileID: 9150885730608939459}
-  ID: 0
-  tileLayer:
-    serializedVersion: 2
-    m_Bits: 128
-  doors:
-  - {fileID: 8552199112241434639}
-  - {fileID: 3570201313268426894}
-  - {fileID: 7729912327330886875}
-  - {fileID: 8198136465851751354}
+  tileLogic:
+    tileType: 0
+    spawnSpot: {fileID: 4836784615979272861}
+    tileSize: 27
+    overlapSize: {x: 27, y: 5, z: 27}
+    genSpawnLocations:
+    - {fileID: 8769341170660512484}
+    - {fileID: 3678422605895144164}
+    - {fileID: 8278786816091727828}
+    - {fileID: 9150885730608939459}
+    doors:
+    - {fileID: 8552199112241434639}
+    - {fileID: 3570201313268426894}
+    - {fileID: 7729912327330886875}
+    - {fileID: 8198136465851751354}
+    enemySpawnPoints: []
+    playerSpawnPoints: []
+    powerupSpawnPoints: []
+    ID: 0
 --- !u!1 &4453102959812554243
 GameObject:
   m_ObjectHideFlags: 0
@@ -687,6 +691,37 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &4836784615979272861
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2862975970638029740}
+  m_Layer: 0
+  m_Name: TileSpawnSpot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2862975970638029740
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4836784615979272861}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6821029165505353359}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5216807746882245445
 GameObject:
   m_ObjectHideFlags: 0

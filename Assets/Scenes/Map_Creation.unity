@@ -119,7 +119,7 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &1499109649
+--- !u!1 &1155790327
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -127,85 +127,75 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1499109652}
-  - component: {fileID: 1499109651}
-  - component: {fileID: 1499109650}
+  - component: {fileID: 1155790328}
   m_Layer: 0
-  m_Name: Main Camera
-  m_TagString: MainCamera
-  m_Icon: {fileID: 0}
+  m_Name: (0,0,0)
+  m_TagString: Untagged
+  m_Icon: {fileID: -1412012063857583412, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &1499109650
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1499109649}
-  m_Enabled: 1
---- !u!20 &1499109651
-Camera:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1499109649}
-  m_Enabled: 1
-  serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
-  m_projectionMatrixMode: 1
-  m_GateFitMode: 2
-  m_FOVAxisMode: 0
-  m_Iso: 200
-  m_ShutterSpeed: 0.005
-  m_Aperture: 16
-  m_FocusDistance: 10
-  m_FocalLength: 50
-  m_BladeCount: 5
-  m_Curvature: {x: 2, y: 11}
-  m_BarrelClipping: 0.25
-  m_Anamorphism: 0
-  m_SensorSize: {x: 36, y: 24}
-  m_LensShift: {x: 0, y: 0}
-  m_NormalizedViewPortRect:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
-  near clip plane: 0.3
-  far clip plane: 1000
-  field of view: 60
-  orthographic: 0
-  orthographic size: 5
-  m_Depth: -1
-  m_CullingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_RenderingPath: -1
-  m_TargetTexture: {fileID: 0}
-  m_TargetDisplay: 0
-  m_TargetEye: 3
-  m_HDR: 1
-  m_AllowMSAA: 1
-  m_AllowDynamicResolution: 0
-  m_ForceIntoRT: 0
-  m_OcclusionCulling: 1
-  m_StereoConvergence: 10
-  m_StereoSeparation: 0.022
---- !u!4 &1499109652
+--- !u!4 &1155790328
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1499109649}
+  m_GameObject: {fileID: 1155790327}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1456110808
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1456110810}
+  - component: {fileID: 1456110809}
+  m_Layer: 0
+  m_Name: Game_Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1456110809
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1456110808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fabc97cdd9a92f54fbf00995b6ceb22b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameManager
+  rng:
+    state: 0
+  tankPrefab: {fileID: 6292994346660287599, guid: 4b869d82214dcf842b05c46a30ecfeb6, type: 3}
+  playerControllerPrefab: {fileID: 3297021378944740710, guid: ba81028cafc06374186501778b9675dc, type: 3}
+  players: []
+  tanks: []
+  generatePlayer: 0
+--- !u!4 &1456110810
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1456110808}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -240,26 +230,45 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f0b1c1a51a8e9d449533c1abf72dd0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MapGenerator
-  randomType: 3
-  seed: 235124
-  availableTiles:
-  - {fileID: 650201141377388768, guid: bb3d5f4bb49467f43a7e17e2c644588d, type: 3}
-  - {fileID: 650201141377388768, guid: 39bc2d1fc97392d4dab6ec74053eb881, type: 3}
-  - {fileID: 650201141377388768, guid: bbc49e25932f9b542865184331ae0bcd, type: 3}
-  tileWidth: 25
-  tileLength: 25
-  mapColumns: 15
-  mapRows: 15
+  randomType: 0
+  genType: 0
   mapLogic:
-    seed: 235124
-    availableTiles: []
-    generatedTiles: []
-    tileWidth: 0
-    tileLength: 0
+    seed: 16
+    maxOdds: 0
+    TileTypeChances: 0700000003000000
+    startTile: {fileID: 650201141377388768, guid: 54070b128f329044b9aab6f4a79fb4d4, type: 3}
+    normalTiles:
+    - {fileID: 650201141377388768, guid: bbc49e25932f9b542865184331ae0bcd, type: 3}
+    - {fileID: 650201141377388768, guid: bb3d5f4bb49467f43a7e17e2c644588d, type: 3}
+    hallwayTiles:
+    - {fileID: 650201141377388768, guid: 39bc2d1fc97392d4dab6ec74053eb881, type: 3}
+    - {fileID: 650201141377388768, guid: c5d46ad17eb935a4a851c63424d4be8f, type: 3}
+    - {fileID: 650201141377388768, guid: 5737eb151d1aa4346b0918d5d054e116, type: 3}
+    - {fileID: 650201141377388768, guid: 7f36fa85cbc9df644bffc1568e4f2f0c, type: 3}
+    - {fileID: 650201141377388768, guid: 41630200e4282b04ab193dc7014ea2b8, type: 3}
+    - {fileID: 650201141377388768, guid: c9e088962d65fb44f9c00e1aeb63416d, type: 3}
+    generatedMazeTiles: []
     mapSize: 30
     generatedTilesCount: 0
-    mapColumns: 0
-    mapRows: 0
+    gridTiles:
+    - {fileID: 650201141377388768, guid: 92a97fbcd1a0a4440a48e5365256ccff, type: 3}
+    - {fileID: 650201141377388768, guid: 0afc3e83c769e86488ae3685d20f732b, type: 3}
+    - {fileID: 650201141377388768, guid: 684e1c7ef594d3448aa5af8854e9cf71, type: 3}
+    - {fileID: 650201141377388768, guid: 00775448028e1de46b7dcde17bf18477, type: 3}
+    mapColumns: 6
+    mapRows: 6
+    playerSpawnChoices: []
+    enemySpawnChoices: []
+    aiTankObjects:
+    - {fileID: 4688572070201509724, guid: dda182354428ebb42a277d895eed3c62, type: 3}
+    - {fileID: 9069540796320678615, guid: 147f3a1e1e6a4aa4aae4083d17a28bb9, type: 3}
+    - {fileID: 2320793100356496756, guid: 8d68bba0c33672a479c3aae1b063ac4f, type: 3}
+    - {fileID: 7675850208255419870, guid: 01fd92f250e8593478bf4b5a6fa45d69, type: 3}
+    aiControllers:
+    - {fileID: 7761261010202360283, guid: 00e5e1f7c5d24b64ab0bc4962f7df3ba, type: 3}
+    - {fileID: 3322883383048421103, guid: 78f9bfc595f8d1c49b40eceaa322a84a, type: 3}
+    - {fileID: 6614717504374095082, guid: d329a519f1d1c7b4aa93356750184dfd, type: 3}
+    - {fileID: 183068083889849534, guid: 04a4c794ff2dd6449ba58e2da868fc3a, type: 3}
 --- !u!4 &1752435375
 Transform:
   m_ObjectHideFlags: 0
@@ -406,6 +415,7 @@ MonoBehaviour:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 1499109652}
   - {fileID: 1762335794}
   - {fileID: 1752435375}
+  - {fileID: 1155790328}
+  - {fileID: 1456110810}

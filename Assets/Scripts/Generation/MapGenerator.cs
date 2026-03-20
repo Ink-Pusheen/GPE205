@@ -4,69 +4,43 @@ using System;
 using System.Collections;
 
 
-public enum RandomType { Random, Seeded, MapOfTheDay, MazeLike}
+public enum RandomType { Random, Seeded, MapOfTheDay}
+public enum GenType { Grid, MazeLike }
 public class MapGenerator : MonoBehaviour
 {
     [Header("Random Data")]
     public RandomType randomType;
+    public GenType genType;
 
-    public int seed = 235124;
-
-    [Header("TileData")]
-    public List<Tile> availableTiles = new List<Tile>();
-
-    public float tileWidth;
-    public float tileLength;
-
-    public int mapColumns;
-    public int mapRows;
-
-    public Tile[,] grid;
+    [Header("Map Generator Logic")]
 
     public MapGeneratorLogic mapLogic = new MapGeneratorLogic();
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Awake()
     {
         //TODO: Remove later, For testing
-        InitializeRandomSeed();
+        mapLogic.InitializeRandomSeed(randomType, this);
+        //InitializeRandomSeed();
+    }
+
+    public void Start()
+    {
         StartGeneratingMap();
     }
 
     public void InitializeRandomSeed()
     {
-        if (randomType == RandomType.Seeded)
-        {
-            UnityEngine.Random.InitState(seed);
-        }
-        else if (randomType == RandomType.Random || randomType == RandomType.MazeLike)
-        {
-            //Do nothing as random class auto seeds
-            UnityEngine.Random.InitState((int)System.DateTime.Now.Ticks);
-        }
-        else if (randomType == RandomType.MapOfTheDay)
-        {
-            //Map of the day
-            UnityEngine.Random.InitState(DateToInt(System.DateTime.Now.Date));
-        }
-        else
-        {
-            Debug.Log("No seed type chosen");
-        }
+        mapLogic.InitializeRandomSeed(randomType, this);
     }
-
-    public int DateToInt(DateTime date)
-    {
-        return date.Year + date.Month + date.Day;
-    }
-
+    //zach waz here
     public void StartGeneratingMap()
     {
-        if (randomType == RandomType.MazeLike)
+        if (genType == GenType.MazeLike)
         {
             mapLogic.generatedTilesCount = 0;
 
-            Tile startTile = Instantiate(GenerateTile(), Vector3.zero, Quaternion.identity) as Tile;
+            Tile startTile = Instantiate(mapLogic.startTile, Vector3.zero, Quaternion.identity) as Tile;
 
             if (startTile == null)
             {
@@ -74,175 +48,181 @@ public class MapGenerator : MonoBehaviour
                 return;
             }
 
-            startTile.addTileToList(this);
+            startTile.addTileToList(this, true);
         }
         else
         {
-            //Create the grid array to hold the map
-            grid = new Tile[mapColumns, mapRows];
-            //mapLogic.newGrid();
-
             //Starting position
             Vector3 spawnPos = Vector3.zero;
 
             //Iterate through and generate all the map tiles
-            for (int column = 0; column < mapColumns; column++)
+            for (int column = 0; column < mapLogic.mapColumns; column++)
             {
                 spawnPos.x = 0;
 
-                for (int row = 0; row < mapRows; row++)
+                for (int row = 0; row < mapLogic.mapRows; row++)
                 {
-                    Tile tempTile = Instantiate(GenerateTile()) as Tile;
+                    Tile gridTile = Instantiate(GenerateTile(false)) as Tile; //Create a map tile
                     //Tile tempTile = Instantiate(mapLogic.GenerateTile()) as Tile;
 
-                    tempTile.transform.position = spawnPos;
+                    gridTile.transform.position = spawnPos; //Put it in the right position
 
-                    spawnPos.x += 25;
-
-                    //If bottom row, disable the north door
-                    if (row == 0)
-                    {
-                        tempTile.doors[0].SetActive(false);
-                    }
-
-                    //If top row, disable the south door.
-                    else if (row == mapRows - 1)
-                    {
-                        tempTile.doors[2].SetActive(false);
-                    }
-
-                    //Otherwise in the middle disable both
-                    else
-                    {
-                        tempTile.doors[0].SetActive(false);
-                        tempTile.doors[2].SetActive(false);
-                    }
-
-                    if (column == 0)
-                    {
-                        tempTile.doors[3].SetActive(false);
-                    }
-
-                    else if (column == mapColumns - 1)
-                    {
-                        tempTile.doors[1].SetActive(false);
-                    }
-
-                    else
-                    {
-                        tempTile.doors[3].SetActive(false);
-                        tempTile.doors[1].SetActive(false);
-                    }
+                    spawnPos.x += gridTile.tileLogic.tileSize;
 
                     //Name the tile and add it
-                    tempTile.name = $"Tile [{column}, {row}]";
+                    gridTile.name = $"Tile [{column}, {row}]";
 
-                    grid[column, row] = tempTile;
+                    mapLogic.generatedGridTiles[column, row] = gridTile; //Save it to the grid
+
+                    //Grab the player spawns
+                    for (int playerSpawn = 0; playerSpawn < gridTile.tileLogic.playerSpawnPoints.Count; playerSpawn++)
+                    {
+                        mapLogic.playerSpawnChoices.Add(gridTile.tileLogic.playerSpawnPoints[playerSpawn]);
+                    }
+
+                    //Grab enemy spawns
+                    for (int enemySpawn = 0; enemySpawn < gridTile.tileLogic.enemySpawnPoints.Count; enemySpawn++)
+                    {
+                        mapLogic.enemySpawnChoices.Add(gridTile.tileLogic.enemySpawnPoints[enemySpawn]);
+                    }
                 }
 
-                spawnPos.z += 25;
+                spawnPos.z += 27;
             }
 
-            //Create a map tile
-            //Put it in the right position
-            //Open the correct doors
-            //Save it to the grid
-            Invoke("deleteMap", 6);
+            SpawnEnemies();
         }
-
-
     }
 
-    #region Generation Logic
+    #region Maze Generation Logic
 
     //Maze Like
     private void GenerateMazeTile()
     {
         if (mapLogic.generatedTilesCount >= mapLogic.mapSize)
         {
-            //TODO: Stop generating
+            //Stops generating and checks hallways for availability of final rooms of the generation
+            mapLogic.HallwayChecks(this);
         }
         else
         {
-            if (mapLogic.generatedTiles.Count == 0)
+            if (mapLogic.generatedMazeTiles.Count == 0)
             {
                 print("Not enough tiles");
                 StartCoroutine(Delay());
                 return;
             }
 
-            int randomTile = UnityEngine.Random.Range(0, mapLogic.generatedTiles.Count);
+            
+            int randomTile = GameManager.instance.rng.NextInt(0, mapLogic.generatedMazeTiles.Count);
 
-            if (mapLogic.generatedTiles[randomTile].spawnLocations.Count == 0)
-            {
-                print($"No more spawns on tile {mapLogic.generatedTiles[randomTile].ID}");
-                StartCoroutine(Delay());
-                return;
-            }
-
-            if (mapLogic.generatedTiles[randomTile] == null)
+            if (mapLogic.generatedMazeTiles[randomTile] == null)
             {
                 Debug.Log("Null reference;");
                 return;
             }
 
-            Tile tileToSpawn = GenerateTile();
+            Tile tileToSpawn = GenerateTile(false);
+            mapLogic.generatedMazeTiles[randomTile].spawnTile(tileToSpawn, true);
 
-            //Debug.Log(mapLogic.generatedTiles[randomTile]);
-            
-            mapLogic.generatedTiles[randomTile].spawnTile(tileToSpawn);
-            //return;
             mapLogic.generatedTilesCount++;
         }
     }
 
     public void FailedTileSpawn()
     {
+        Debug.Log("Failed Spawn");
+        //GameManager.instance.rng.state = mapLogic.saveStates[0];
+        //Debug.Log("Seed Reset");
         mapLogic.generatedTilesCount--;
         StartCoroutine(Delay());
     }
 
     public IEnumerator Delay()
     {
-        //yield return new WaitForSeconds(0.075f);
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.075f);
+        //yield return new WaitForSeconds(1.5f); //Testing value
 
         GenerateMazeTile();
+    }
+
+    public void AddGeneratedTile(Tile tileToAdd, bool moreGeneration)
+    {
+        mapLogic.generatedMazeTiles.Add(tileToAdd);
+
+        //Grab player spawn points
+        for (int spawns = 0; spawns < tileToAdd.tileLogic.playerSpawnPoints.Count; spawns++)
+        {
+            mapLogic.playerSpawnChoices.Add(tileToAdd.tileLogic.playerSpawnPoints[spawns]);
+        }
+
+        //Grab enemy spawns
+        for (int enemySpawn = 0; enemySpawn < tileToAdd.tileLogic.enemySpawnPoints.Count; enemySpawn++)
+        {
+            mapLogic.enemySpawnChoices.Add(tileToAdd.tileLogic.enemySpawnPoints[enemySpawn]);
+        }
+
+        if (moreGeneration) StartCoroutine(Delay());
     }
 
     #endregion
 
 
 
-    void deleteMap()
+    public void deleteMap()
     {
-        Debug.Log("Delete");
-        for (int column = 0; column < mapColumns; column++)
+        mapLogic.deleteMap(genType);
+    }
+
+    public Tile GenerateTile(bool inFinalization)
+    {
+        switch (genType)
         {
-            for (int row = 0; row < mapRows; row++)
-            {
-                Destroy(grid[column, row].gameObject);
-            }
+            case GenType.MazeLike:
+
+                if (!inFinalization)
+                {
+                    List<Tile> tiles = mapLogic.chosenTileType();
+
+                    Tile generatedTile = mapLogic.GenerateTile(tiles);
+
+                    return generatedTile;
+                }
+
+                else
+                {
+                    Tile chosenTile = mapLogic.GenerateTile(mapLogic.normalTiles);
+
+                    return chosenTile;
+                }
+
+            case GenType.Grid:
+
+                Tile randomTile = mapLogic.GenerateTile(mapLogic.gridTiles);
+
+                return randomTile;
         }
+
+        ArgumentException arguement = new ArgumentException("Couldn't Generate Tile");
+        throw arguement;
     }
 
-    public Tile GenerateTile()
+    public void SpawnEnemies()
     {
-        int chosenTile = UnityEngine.Random.Range(0, availableTiles.Count);
+        for (int enemySpawns = 0; enemySpawns < mapLogic.enemySpawnChoices.Count; enemySpawns++)
+        {
+            int chosenAI = GameManager.instance.rng.NextInt(0, mapLogic.aiControllers.Length);
+            GameManager.instance.EnemyInitialization(mapLogic.aiTankObjects[chosenAI], mapLogic.aiControllers[chosenAI], mapLogic.enemySpawnChoices[enemySpawns]);
+        }
 
-        return availableTiles[chosenTile];
+        SpawnPlayer();
     }
 
-    public void AddGeneratedTile(Tile tileToAdd)
+    public void SpawnPlayer()
     {
-        mapLogic.generatedTiles.Add(tileToAdd);
+        int chosenSpawn = GameManager.instance.rng.NextInt(0, mapLogic.playerSpawnChoices.Count);
+        GameObject playerSpawn = mapLogic.playerSpawnChoices[chosenSpawn];
 
-        StartCoroutine(Delay());
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        GameManager.instance.StartGame(playerSpawn);
     }
 }

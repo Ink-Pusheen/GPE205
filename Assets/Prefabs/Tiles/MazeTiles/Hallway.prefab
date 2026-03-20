@@ -15,7 +15,7 @@ GameObject:
   m_Layer: 0
   m_Name: Room_Spawn_South
   m_TagString: Untagged
-  m_Icon: {fileID: 7250588514170254948, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -98,6 +98,37 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!1 &1490082841684726559
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5730480737336233195}
+  m_Layer: 0
+  m_Name: TileSpawnSpot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5730480737336233195
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1490082841684726559}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6821029165505353359}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3462173082887995207
 GameObject:
   m_ObjectHideFlags: 0
@@ -113,7 +144,7 @@ GameObject:
   m_Layer: 0
   m_Name: Room_Spawn_North
   m_TagString: Untagged
-  m_Icon: {fileID: 7250588514170254948, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -377,6 +408,7 @@ Transform:
   - {fileID: 1772642302516165845}
   - {fileID: 4492170769104826262}
   - {fileID: 6232044312559498644}
+  - {fileID: 5730480737336233195}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &650201141377388768
@@ -391,18 +423,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23a241b3ca7c8c74a93102b68799a475, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Tile
-  tileSize: 27
-  overlapSize: {x: 27, y: 5, z: 27}
-  spawnLocations:
-  - {fileID: 3462173082887995207}
-  - {fileID: 31317329938802954}
-  ID: 0
-  tileLayer:
-    serializedVersion: 2
-    m_Bits: 128
-  doors:
-  - {fileID: 7531817847589359311}
-  - {fileID: 7967498701220332843}
+  tileLogic:
+    tileType: 1
+    spawnSpot: {fileID: 1490082841684726559}
+    tileSize: 27
+    overlapSize: {x: 27, y: 5, z: 27}
+    genSpawnLocations:
+    - {fileID: 3462173082887995207}
+    - {fileID: 31317329938802954}
+    doors:
+    - {fileID: 7531817847589359311}
+    - {fileID: 7967498701220332843}
+    enemySpawnPoints: []
+    playerSpawnPoints: []
+    powerupSpawnPoints: []
+    ID: 0
 --- !u!1 &5972850957728569273
 GameObject:
   m_ObjectHideFlags: 0

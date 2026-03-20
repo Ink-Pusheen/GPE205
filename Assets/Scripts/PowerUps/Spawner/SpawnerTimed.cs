@@ -37,7 +37,7 @@ public class SpawnerTimed : MonoBehaviour
         if (countdownTimer <= 0)
         {
             //Spawn object
-            spawnedObject = Instantiate(pickup, transform.position, transform.rotation) as GameObject;
+            spawnedObject = Instantiate(pickup, transform.position + new Vector3(0, 0.6f, 0), transform.rotation) as GameObject;
 
             //Reset timer
             countdownTimer = timeBetweenSpawns;

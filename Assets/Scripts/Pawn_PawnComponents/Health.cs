@@ -23,7 +23,7 @@ public class Health : MonoBehaviour
     public void TakeDamage(float dmgTaken)
     {
         currentHealth -= dmgTaken;
-
+        Debug.Log("Taken Damage");
         //Clamp the hp between 0 and max
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
 

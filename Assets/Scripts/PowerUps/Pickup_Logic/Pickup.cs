@@ -15,6 +15,7 @@ public abstract class Pickup : MonoBehaviour
     public virtual void Update()
     {
         //TODO: Anything our pickup does every frame draw
+        transform.Rotate(0, 1, 0);
     }
 
     public void OnTriggerEnter(Collider other)
@@ -26,11 +27,8 @@ public abstract class Pickup : MonoBehaviour
         if (PUM == null) return;
 
         //Add this to the powerup manager
-        ApplyPowerup(PUM);
-
-        //Afterwards destroy this object
-        Destroy(this.gameObject);
+        ApplyPowerup(PUM, this.gameObject);
     }
 
-    public abstract void ApplyPowerup(PowerupManager PUM);
+    public abstract void ApplyPowerup(PowerupManager PUM, GameObject pickupHost);
 }

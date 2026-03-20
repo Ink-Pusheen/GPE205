@@ -23,11 +23,8 @@ public class ControllerPlayer : Controller
         
     }
 
-    private void Start()
+    public override void Start()
     {
-        //Enable inputs
-        pI.enabled = true;
-
         //Add controller to gamemanager
         GameManager.instance.players.Add(this);
     }
@@ -42,14 +39,14 @@ public class ControllerPlayer : Controller
     {
         //TODO: Write the logic of the player here
 
+        if (pI == null) return;
+
         if (rotateTank.IsPressed())
         {
             float rotation = rotateTank.ReadValue<float>();
             Vector3 rotateInput = new Vector3(rotation, 0, 0);
 
             pawn.Rotate(rotateInput);
-            //pawn.gameObject.transform.Rotate(0, rotation, 0);
-            //Debug.Log("REEEEE");
         }
 
         if (moveTank.IsPressed())
@@ -57,7 +54,6 @@ public class ControllerPlayer : Controller
             float moveVal = moveTank.ReadValue<float>();
             Vector3 directionInput = new Vector3(0, 0, moveVal);
             pawn.Move(directionInput);
-            //rbTank.linearVelocity = pawn.gameObject.transform.TransformDirection((Vector3.forward * moveVal));
         }
 
         if (fire.WasPressedThisFrame())
@@ -84,5 +80,8 @@ public class ControllerPlayer : Controller
         fire = pI.actions.FindAction("Fire");
 
         flip = pI.actions.FindAction("Flip");
+
+        //Enable inputs
+        pI.enabled = true;
     }
 }

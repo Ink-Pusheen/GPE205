@@ -7,7 +7,7 @@ public class Projectile : MonoBehaviour
 
     [SerializeField] private int damage;
 
-    [SerializeField] GameObject owner;
+    public GameObject owner;
 
     public void setOwner(GameObject setOwner)
     {
@@ -28,16 +28,6 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject == owner) return; //Ignore the owner
 
-        //Else check if it has the health component, and if it does, deal damage
-        Health hitHealth = other.GetComponent<Health>();
-
-        if (hitHealth != null)
-        {
-            hitHealth.TakeDamage(damage);
-        }
-
-        Destroy(this.gameObject);
     }
 }

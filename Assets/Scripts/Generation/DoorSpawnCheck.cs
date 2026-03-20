@@ -15,19 +15,14 @@ public class DoorSpawnCheck : MonoBehaviour
 
         if (other.CompareTag("Door"))
 
-            if (other.gameObject == doorToLower)
-            {
-                //Debug.Log("Self Door Detected");
-            }
-
-            else
+            if (other.gameObject != doorToLower)
             {
                 doorToLower.transform.Translate(0, -1, 0);
                 activatable = !activatable;
 
                 //TODO: Make the designated door and spawnpoint remove themselves as a possible spawn spot.
-                parentTile.doors.Remove(doorToLower);
-                parentTile.spawnLocations.Remove(doorSpawner);
+                parentTile.tileLogic.doors.Remove(doorToLower);
+                parentTile.tileLogic.genSpawnLocations.Remove(doorSpawner);
             }
     }
 
@@ -47,8 +42,8 @@ public class DoorSpawnCheck : MonoBehaviour
                     activatable = !activatable;
 
                     //TODO: Make the designated door and spawnpoint remove themselves as a possible spawn spot.
-                    parentTile.doors.Remove(doorToLower);
-                    parentTile.spawnLocations.Remove(doorSpawner);
+                    parentTile.tileLogic.doors.Remove(doorToLower);
+                    parentTile.tileLogic.genSpawnLocations.Remove(doorSpawner);
 
                     Tile doorCheck = hits[i].gameObject.transform.parent.parent.GetComponentInParent<Tile>();
 
@@ -70,8 +65,8 @@ public class DoorSpawnCheck : MonoBehaviour
         activatable = !activatable;
 
         //TODO: Make the designated door and spawnpoint remove themselves as a possible spawn spot.
-        parentTile.doors.Remove(doorToLower);
-        parentTile.spawnLocations.Remove(doorSpawner);
+        parentTile.tileLogic.doors.Remove(doorToLower);
+        parentTile.tileLogic.genSpawnLocations.Remove(doorSpawner);
 
         activatable = !activatable;
     }

@@ -1,136 +1,81 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Tile : MonoBehaviour
 {
-    private MapGenerator mapGenInstance;
-
-    public float tileSize;
-    public Vector3 overlapSize;
-    public List<GameObject> spawnLocations = new List<GameObject>();
-
-    public int ID;
-
-    [SerializeField] LayerMask tileLayer;
-
-    //North - 0, East - 1, South - 2, West - 3 [Increments will change based on what is removed]
-    public List<GameObject> doors = new List<GameObject>(); //doorNorth, doorEast, doorSouth, doorWest;
+    public TileLogic tileLogic = new TileLogic();
 
     private void Awake()
     {
-        ID = Random.Range(0, 5000);
-
-        for (int i = 0; i < spawnLocations.Count; i++)
-        {
-            spawnLocations[i].name = $"{spawnLocations[i].name}: {ID}";
-        }
+        tileLogic.CreateID();
     }
 
-    public void spawnTile(Tile tileToSpawn)
+    public void spawnTile(Tile tileToSpawn, bool generateMore)
     {
-        int chosenSpawnSpot = Random.Range(0, spawnLocations.Count);
+        bool hasAvailableSpawn = tileLogic.checkSpawnAvailability();
 
-        Vector3 startPos = spawnLocations[chosenSpawnSpot].transform.position;
-        Vector3 forward = transform.TransformDirection(spawnLocations[chosenSpawnSpot].transform.forward);
-        Vector3 spawnTransform = startPos + (forward * (tileToSpawn.tileSize * 0.5f));
-        //Vector3 spawnTransform = transform.TransformDirection(spawnLocations[chosenSpawnSpot].transform.forward) * tileToSpawn.tileSize;
-        //Debug.Log(spawnLocations[chosenSpawnSpot].transform.position);
+        if (!hasAvailableSpawn)
+        {
+            //Failed spawn
 
+            if (!generateMore) return;
 
+            if (tileLogic.mapGenInstance != null) tileLogic.mapGenInstance.FailedTileSpawn();
+            else Debug.Log("Mapgen Null");
+            return;
+        }
 
-        Vector3 lookRotation = spawnTransform - transform.position;
-        Quaternion rotation = Quaternion.LookRotation(lookRotation);
-        Debug.Log(rotation);
-        bool willOverlap = CollidingWithOtherTile(tileToSpawn, spawnTransform);
+        int chosenSpawn = tileLogic.chooseSpawnSpot();
+        Debug.Log(chosenSpawn);
+        Vector3 tileSpawn;
+        Quaternion tileRotation;
+
+        tileLogic.returnSpawnSpot(chosenSpawn, tileToSpawn, this.gameObject, out tileSpawn, out tileRotation);
+
+        bool willOverlap = tileLogic.tileOverlapping(tileToSpawn, tileSpawn, this.gameObject);
 
         if (willOverlap)
         {
-            Debug.Log($"Overlap Detected on {name} at position {spawnTransform} with tile {tileToSpawn}");
-            
-            if (mapGenInstance != null) mapGenInstance.FailedTileSpawn();
+            Debug.Log($"Overlap Detected on {name} at position {tileSpawn} with tile {tileToSpawn}");
+
+            if (!generateMore) return;
+
+            if (tileLogic.mapGenInstance != null) tileLogic.mapGenInstance.FailedTileSpawn();
             else Debug.Log("Mapgen Null");
-                return;
+
+            return;
         }
 
-        Tile spawnedTile = Instantiate(tileToSpawn, spawnTransform, rotation);
+        Tile spawnedTile = Instantiate(tileToSpawn, tileSpawn, tileRotation);
 
-        Debug.Log($"{this.name} spawned a tile on {spawnLocations[chosenSpawnSpot].name}");
+        //Debug.Log($"{this.name} spawned a tile on {spawnLocations[chosenSpawnSpot].name}"); //Debug line
 
-        DoorSpawnCheck door = spawnLocations[chosenSpawnSpot].GetComponent<DoorSpawnCheck>();
-        if (door != null) door.activatable = false;
-        else Debug.Log("No Door component");
+        tileLogic.DeactivateDoorAndSpawner(chosenSpawn);
 
-
-        doors[chosenSpawnSpot].transform.Translate(0, -1, 0);
-
-        spawnLocations.RemoveAt(chosenSpawnSpot);
-        doors.RemoveAt(chosenSpawnSpot);
-        //return;
-        //Debug.Log("Keep Tile");
-        spawnedTile.addTileToList(mapGenInstance);
-
-
+        spawnedTile.addTileToList(tileLogic.mapGenInstance, generateMore);
     }
 
     public void DoorChecks()
     {
-        if (spawnLocations.Count == 0) return;
-
-        for (int i = spawnLocations.Count - 1; i > 0; i--)
-        {
-            DoorSpawnCheck c = spawnLocations[i].GetComponent<DoorSpawnCheck>();
-
-            if (c == null)
-            {
-                //Debug.Log("Door check is null");
-                continue;
-            }
-
-            c.checkForDoors();
-        }
+        tileLogic.DoorChecks();
     }
 
-    public void addTileToList(MapGenerator mapGen)
+    public void addTileToList(MapGenerator mapGen, bool moreGeneration)
     {
-        gameObject.name = $"Tile: {ID}";
-        mapGenInstance = mapGen;
-        mapGen.AddGeneratedTile(this);
+        gameObject.name = $"Tile: {tileLogic.ID}";
+        tileLogic.addTileToList(mapGen, moreGeneration, this);
     }
 
-    bool CollidingWithOtherTile(Tile tileToCheck, Vector3 checkSpot)
+    public void HallwayCheck()
     {
-        int layermask = LayerMask.GetMask("Tile");
-        Collider[] hits = Physics.OverlapBox(checkSpot, tileToCheck.overlapSize * 0.5f, Quaternion.identity, tileLayer);
-
-        if (hits.Length > 0)
-        {
-            Debug.Log(hits.Length);
-
-            for (int i = 0; i < hits.Length; i++)
-            {
-                Debug.Log($"{hits[i].name}: parented to {hits[i].transform.parent.name}");
-            }
-
-            foreach (Collider col in hits)
-            {
-                //Debug.Log($"Hit {col.gameObject.name}: {col.gameObject.transform.parent.name} at {col.transform.position}");
-                if (col.transform.IsChildOf(transform) || col.gameObject.layer != LayerMask.NameToLayer("Tile")) continue;
-
-                return true;
-            }
-        }
-        else
-        {
-            Debug.Log("No hits");
-        }
-
-        return false;
+        tileLogic.HallwayCheck(this);
     }
 
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
 
-        Gizmos.DrawWireCube(transform.position, overlapSize);
+        Gizmos.DrawWireCube(transform.position, tileLogic.overlapSize);
     }
 }

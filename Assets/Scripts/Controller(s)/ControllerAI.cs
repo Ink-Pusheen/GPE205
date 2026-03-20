@@ -23,11 +23,12 @@ public class ControllerAI : Controller
     public float visionDistance = 10f;
     public float fovAngle = 60;
 
+    public GameObject[] roamPoints;
 
     public override void Start()
     {
         //Save our initial transition time
-        transitionChangeTime = Time.deltaTime;
+        transitionChangeTime = Time.deltaTime; //Debug.Log(transitionChangeTime);
     }
 
     public void ChangeState(AIState newState)
@@ -41,12 +42,12 @@ public class ControllerAI : Controller
 
     public override void MakeDecisions()
     {
-        throw new System.NotImplementedException();
+        //throw new System.NotImplementedException();
     }
 
     public override void SetupControls()
     {
-        throw new System.NotImplementedException();
+        //throw new System.NotImplementedException();
     }
 
     public bool CanMoveForward(float distance)
@@ -151,6 +152,8 @@ public class ControllerAI : Controller
         float newFleeDistance = flippedPercentOfFleeing * fleeDistance;
 
         Vector3 targetPos = pawn.transform.position + (vectorToTarget * newFleeDistance);
+
+        pawn.Move(targetPos);
     }
 
     public void FindPickup()
