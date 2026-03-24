@@ -2,13 +2,21 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+[Serializable]
+public class GameState
+{
+    public string name;
+    public GameObject objectRef;
+}
+
 public class GameManager : MonoBehaviour
 {
-
+    [Header("Instance and Randomness")]
     public static GameManager instance;
 
     public Unity.Mathematics.Random rng;
 
+    [Header("Tanks")]
     public GameObject tankPrefab;
     public GameObject playerControllerPrefab;
 
@@ -16,6 +24,13 @@ public class GameManager : MonoBehaviour
     public List<Pawn> tanks;
 
     public bool generatePlayer;
+
+    [Header("GameState")]
+
+    public GameState[] states;
+
+    int curState = 0;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -28,7 +43,10 @@ public class GameManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
+            return;
         }
+
+        DisableAllStates();
 
         // Create our up to date list objects (not just memory locations, but actual lists)
         players = new List<Controller>();
@@ -37,6 +55,8 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        InvokeRepeating("testSwap", 2, 2);
+
         //For testing purposes
         if (!generatePlayer) return;
         GameObject zero = new GameObject("Zero");
@@ -61,6 +81,8 @@ public class GameManager : MonoBehaviour
         playerController.Possess(playerTank);
         playerController.SetupControls();
     }
+
+    #region Tank Spawning
 
     public void EnemyInitialization(GameObject tankPrefab, GameObject enemyAI, GameObject spawnPosition)
     {
@@ -101,4 +123,46 @@ public class GameManager : MonoBehaviour
 
         return enemyController;
     }
+
+    #endregion Tank Spawning
+
+    #region Game State Swapping
+
+    private void DisableAllStates()
+    {
+        //Loop through the states to disable them all
+        foreach (GameState state in states)
+        {
+            state.objectRef.SetActive(false);
+        }
+    }
+
+    public void ChangeState(string newState)
+    {
+        //Disable other states
+        DisableAllStates();
+
+        //For loop finding the new state to enable
+        for (int i = 0; i < states.Length; i++)
+        {
+            if (states[i].name == newState)
+            {
+                states[i].objectRef.SetActive(true);
+                break;
+            }
+        }
+    }
+
+    private void testSwap()
+    {
+        string state = states[curState].name;
+
+        ChangeState(state);
+
+        curState++;
+
+        if (curState == states.Length) curState = 0;
+    }
+
+    #endregion
 }
