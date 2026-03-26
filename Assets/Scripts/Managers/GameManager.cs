@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem.LowLevel;
 
 [Serializable]
 public class GameState
@@ -47,6 +48,7 @@ public class GameManager : MonoBehaviour
         }
 
         DisableAllStates();
+        ChangeState("TitleScreen");
 
         // Create our up to date list objects (not just memory locations, but actual lists)
         players = new List<Controller>();
@@ -55,8 +57,6 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        InvokeRepeating("testSwap", 2, 2);
-
         //For testing purposes
         if (!generatePlayer) return;
         GameObject zero = new GameObject("Zero");
@@ -137,6 +137,32 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void HideSpecificState(string stateToHide)
+    {
+        //For loop finding the new state to disable
+        for (int i = 0; i < states.Length; i++)
+        {
+            if (states[i].name == stateToHide)
+            {
+                states[i].objectRef.SetActive(false);
+                break;
+            }
+        }
+    }
+
+    public void RevealSpecificState(string stateToReveal)
+    {
+        //For loop finding the new state to enable
+        for (int i = 0; i < states.Length; i++)
+        {
+            if (states[i].name == stateToReveal)
+            {
+                states[i].objectRef.SetActive(true);
+                break;
+            }
+        }
+    }
+
     public void ChangeState(string newState)
     {
         //Disable other states
@@ -151,18 +177,15 @@ public class GameManager : MonoBehaviour
                 break;
             }
         }
-    }
 
-    private void testSwap()
-    {
-        string state = states[curState].name;
-
-        ChangeState(state);
-
-        curState++;
-
-        if (curState == states.Length) curState = 0;
+        if (newState == "Gameplay") RevealSpecificState("GameplaySetup");
     }
 
     #endregion
+
+    public void CloseApplication()
+    {
+        Debug.Log("Close Application");
+        Application.Quit();
+    }
 }

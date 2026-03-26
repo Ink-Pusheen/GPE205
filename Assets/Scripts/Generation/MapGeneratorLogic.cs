@@ -66,6 +66,9 @@ public class MapGeneratorLogic
             Debug.Log("No seed type chosen");
             return;
         }
+
+        //Start map generation
+        mapGen.StartGeneratingMap();
     }
 
     private int DateToInt(DateTime date)
