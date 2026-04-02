@@ -10,6 +10,7 @@ public class ControllerPlayer : Controller
     InputAction moveTank;
     InputAction fire;
     InputAction flip;
+    InputAction devDamage;
 
     Rigidbody rbTank;
 
@@ -17,16 +18,19 @@ public class ControllerPlayer : Controller
 
     [SerializeField] float tankSpeed;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Awake()
+    public override void Awake()
     {
-        
-    }
+        base.Awake();
 
-    public override void Start()
-    {
+        lives = 3;
+
         //Add controller to gamemanager
         GameManager.instance.players.Add(this);
+    }
+
+    private void Start()
+    {
+        updateHealth();
     }
 
     private void OnDestroy()
@@ -65,6 +69,11 @@ public class ControllerPlayer : Controller
         {
             pawn.Flip();
         }
+
+        if (devDamage.WasPressedThisFrame())
+        {
+            pawn.health.TakeDamage(5);
+        }
     }
 
     public override void SetupControls()
@@ -80,6 +89,8 @@ public class ControllerPlayer : Controller
         fire = pI.actions.FindAction("Fire");
 
         flip = pI.actions.FindAction("Flip");
+
+        devDamage = pI.actions.FindAction("DevDamage");
 
         //Enable inputs
         pI.enabled = true;

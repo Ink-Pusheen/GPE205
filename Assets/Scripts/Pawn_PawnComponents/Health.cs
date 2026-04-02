@@ -7,10 +7,13 @@ public class Health : MonoBehaviour
     [HideInInspector] public float currentHealth;
     public float maxHealth;
 
+    private Pawn parentPawn;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        parentPawn = GetComponent<Pawn>();
+
         currentHealth = maxHealth;
     }
 
@@ -29,6 +32,11 @@ public class Health : MonoBehaviour
 
         //Check for death
         if (currentHealth <= 0) Die();
+
+        //Update the tank UI
+        parentPawn.controller.tankUI.updateHealthBar(currentHealth, maxHealth);
+
+        
     }
 
     public void Heal(float healthGained)

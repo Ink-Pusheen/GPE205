@@ -223,10 +223,38 @@ public class MapGenerator : MonoBehaviour
 
     public void SpawnPlayer()
     {
-        int chosenSpawn = GameManager.instance.rng.NextInt(0, mapLogic.playerSpawnChoices.Count);
-        GameObject playerSpawn = mapLogic.playerSpawnChoices[chosenSpawn];
+        if (mapLogic.playerSpawnChoices.Count == 0)
+        {
+            GameObject spawn = new GameObject();
+            spawn.transform.position = Vector3.zero;
 
-        GameManager.instance.StartGame(playerSpawn);
+            GameManager.instance.SpawnPlayer(spawn);
+        }
+        else
+        {
+            int chosenSpawn = GameManager.instance.rng.NextInt(0, mapLogic.playerSpawnChoices.Count);
+            GameObject playerSpawn = mapLogic.playerSpawnChoices[chosenSpawn];
+
+            GameManager.instance.StartGame(playerSpawn);
+        }
+    }
+
+    public void RespawnPlayer(Controller controllerToFill)
+    {
+        if (mapLogic.playerSpawnChoices.Count == 0)
+        {
+            GameObject spawn = new GameObject();
+            spawn.transform.position = Vector3.zero;
+
+            GameManager.instance.RespawnPlayer(controllerToFill, spawn);
+        }
+        else
+        {
+            int chosenSpawn = GameManager.instance.rng.NextInt(0, mapLogic.playerSpawnChoices.Count);
+            GameObject playerSpawn = mapLogic.playerSpawnChoices[chosenSpawn];
+
+            GameManager.instance.RespawnPlayer(controllerToFill, playerSpawn);
+        }
     }
 
     #endregion Tank Spawning

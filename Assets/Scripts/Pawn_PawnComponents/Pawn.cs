@@ -5,6 +5,7 @@ public abstract class Pawn : MonoBehaviour
     [HideInInspector] public Controller controller;
     protected Mover mover;
     [HideInInspector] public Health health;
+    
 
     public Rigidbody rb;
 
@@ -19,7 +20,7 @@ public abstract class Pawn : MonoBehaviour
     public abstract void Shoot(float power);
     public abstract void RotateTowards(Vector3 position);
 
-    public virtual void Start()
+    public virtual void Awake()
     {
         rb = GetComponent<Rigidbody>();
 
@@ -27,12 +28,4 @@ public abstract class Pawn : MonoBehaviour
 
         health = GetComponent<Health>();
     }
-
-    void Awake()
-    {
-        
-    }
-
-    
-
 }

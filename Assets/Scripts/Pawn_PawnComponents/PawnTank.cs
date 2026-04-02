@@ -11,15 +11,20 @@ public class PawnTank : Pawn
     
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    public override void Start()
+    public override void Awake()
     {
-        //Save tank to gamemanager
-        GameManager.instance.tanks.Add(this);
+        
 
         shooter = GetComponent<Shooter>();
 
         //Do what all pawns do
-        base.Start();
+        base.Awake();
+    }
+
+    private void Start()
+    {
+        //Save tank to gamemanager
+        GameManager.instance.tanks.Add(this);
     }
 
     private void OnDestroy()

@@ -116,6 +116,14 @@ public class GameManager : MonoBehaviour
         return playerController;
     }
 
+    public void RespawnPlayer(Controller controllerToPossess, GameObject spawnPosition)
+    {
+        Pawn playerTank = SpawnTank(tankPrefab, spawnPosition);
+
+        controllerToPossess.Possess(playerTank);
+        controllerToPossess.updateHealth();
+    }
+
     public ControllerAI SpawnEnemy(GameObject enemyPrefab)
     {
         GameObject enemySpawn = Instantiate(enemyPrefab, Vector3.zero, Quaternion.identity);

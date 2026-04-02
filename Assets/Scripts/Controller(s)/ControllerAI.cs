@@ -25,7 +25,7 @@ public class ControllerAI : Controller
 
     public GameObject[] roamPoints;
 
-    public override void Start()
+    public override void Awake()
     {
         //Save our initial transition time
         transitionChangeTime = Time.deltaTime; //Debug.Log(transitionChangeTime);

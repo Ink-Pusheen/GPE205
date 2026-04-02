@@ -23,7 +23,7 @@ public abstract class Pickup : MonoBehaviour
         //Check if other object has a powerup manager
         //If so, add the powerup the the manager
         PowerupManager PUM = other.GetComponent<PowerupManager>();
-        Debug.Log(PUM);
+        //Debug.Log(PUM); //Testing line, remove later
         if (PUM == null) return;
 
         //Add this to the powerup manager
