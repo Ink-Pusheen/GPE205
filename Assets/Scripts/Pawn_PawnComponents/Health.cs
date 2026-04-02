@@ -34,7 +34,7 @@ public class Health : MonoBehaviour
         if (currentHealth <= 0) Die();
 
         //Update the tank UI
-        parentPawn.controller.tankUI.updateHealthBar(currentHealth, maxHealth);
+        if(parentPawn != null) parentPawn.controller.tankUI.updateHealthBar(currentHealth, maxHealth);
 
         
     }

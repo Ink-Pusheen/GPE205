@@ -21,7 +21,7 @@ public abstract class Controller : MonoBehaviour
     public abstract void MakeDecisions();
 
     public abstract void SetupControls();
-    public void Possess(Pawn pawnToPossess)
+    public virtual void Possess(Pawn pawnToPossess)
     {
         pawnToPossess.controller = this;
         this.pawn = pawnToPossess;

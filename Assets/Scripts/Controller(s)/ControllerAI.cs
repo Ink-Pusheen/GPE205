@@ -29,6 +29,9 @@ public class ControllerAI : Controller
     {
         //Save our initial transition time
         transitionChangeTime = Time.deltaTime; //Debug.Log(transitionChangeTime);
+
+        //Temp testing
+        //Possess(this.pawn);
     }
 
     public void ChangeState(AIState newState)
@@ -159,5 +162,12 @@ public class ControllerAI : Controller
     public void FindPickup()
     {
         //TODO: Find the nearest pickup
+    }
+
+    public override void Possess(Pawn pawnToPossess)
+    {
+        base.Possess(pawnToPossess);
+
+        tankUI = pawn.GetComponent<UIBase>();
     }
 }

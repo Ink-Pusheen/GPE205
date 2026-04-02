@@ -127,7 +127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 989ee4c687740884789c09dfe5752fe9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DamageOtherOnOverlap
-  damage: 9999999
+  damage: 1
 --- !u!54 &3398750465849595297
 Rigidbody:
   m_ObjectHideFlags: 0

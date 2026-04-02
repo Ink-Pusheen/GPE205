@@ -164,6 +164,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "TitleScreen",
+            "id": "e7aabea8-ba58-4c4b-b60d-bb44adae5c1b",
+            "actions": [
+                {
+                    "name": "Anykey",
+                    "type": "Button",
+                    "id": "608231c7-57bd-4d78-af2b-c435050d070b",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "cd1af4f2-561d-4230-8fa2-4e5b3c89b52d",
+                    "path": "<Keyboard>/anyKey",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Anykey",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []
