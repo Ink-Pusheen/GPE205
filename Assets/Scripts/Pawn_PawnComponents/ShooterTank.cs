@@ -1,9 +1,10 @@
 using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class ShooterTank : Shooter
 {
-    
+    [SerializeField] AudioMixer mixer;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
