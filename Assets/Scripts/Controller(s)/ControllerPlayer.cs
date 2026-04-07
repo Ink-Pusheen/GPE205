@@ -14,6 +14,9 @@ public class ControllerPlayer : Controller
 
     Rigidbody rbTank;
 
+    //Camera
+    private CameraScript cam;
+
     //Attributes
 
     [SerializeField] float tankSpeed;
@@ -26,6 +29,9 @@ public class ControllerPlayer : Controller
 
         //Add controller to gamemanager
         GameManager.instance.players.Add(this);
+
+        //Get the player Camera
+        cam = GetComponentInChildren<CameraScript>();
     }
 
     private void Start()
@@ -42,6 +48,7 @@ public class ControllerPlayer : Controller
     public override void MakeDecisions()
     {
         //TODO: Write the logic of the player here
+        if (pawn == null) return;
 
         if (pI == null) return;
 
@@ -94,5 +101,18 @@ public class ControllerPlayer : Controller
 
         //Enable inputs
         pI.enabled = true;
+
+        //Sets up the camera
+        SetupCamera();
+    }
+
+    public void SetupCamera()
+    {
+        cam.PawnToFollow = pawn.gameObject; //Set the target to follow
+
+        cam.transform.rotation = Quaternion.Euler(10, 0, 0); //Set base rotation
+
+        cam.SetPosition(); //Set the position and rotation
+        cam.transform.SetParent(pawn.transform, false);
     }
 }

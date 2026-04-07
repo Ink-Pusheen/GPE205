@@ -53,20 +53,26 @@ public class MapGeneratorLogic
         }
         else if (randomGenType == RandomType.Random)
         {
+            //Grab the random seed for display
+            seed = (uint)System.DateTime.Now.Ticks;
+
             //Do nothing as random class auto seeds
-            GameManager.instance.rng.InitState((uint)System.DateTime.Now.Ticks);
+            GameManager.instance.rng.InitState(seed);
         }
         else if (randomGenType == RandomType.MapOfTheDay)
         {
+            //Grab the random seed for display
+            seed = (uint)DateToInt(System.DateTime.Now.Date);
+
             //Map of the day
-            GameManager.instance.rng.InitState((uint)DateToInt(System.DateTime.Now.Date));
+            GameManager.instance.rng.InitState(seed);
         }
         else
         {
             Debug.Log("No seed type chosen");
             return;
         }
-
+        Debug.Log(seed);
         //Start map generation
         mapGen.StartGeneratingMap();
     }
@@ -118,6 +124,9 @@ public class MapGeneratorLogic
 
                 break;
         }
+
+        playerSpawnChoices.Clear();
+        enemySpawnChoices.Clear();
     }
 
     public List<Tile> chosenTileType()

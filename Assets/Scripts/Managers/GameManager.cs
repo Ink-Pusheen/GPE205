@@ -22,6 +22,8 @@ public class GameManager : MonoBehaviour
     public GameObject playerControllerPrefab;
 
     public List<Controller> players;
+    public List<Controller> inactivePlayers; //Players who have lost all their lives
+    public List<Controller> aIs;
     public List<Pawn> tanks;
 
     public bool generatePlayer;
@@ -29,6 +31,7 @@ public class GameManager : MonoBehaviour
     [Header("GameState")]
 
     public GameState[] states;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -49,7 +52,10 @@ public class GameManager : MonoBehaviour
 
         // Create our up to date list objects (not just memory locations, but actual lists)
         players = new List<Controller>();
+        aIs = new List<Controller>();
         tanks = new List<Pawn>();
+
+        
     }
 
     private void Start()
@@ -95,6 +101,8 @@ public class GameManager : MonoBehaviour
 
         enemyController.Possess(enemyPawn);
         enemyController.SetupControls();
+
+        aIs.Add(enemyController);
     }
 
     public Pawn SpawnTank(GameObject tankPrefab, GameObject spawnPosition)
@@ -118,6 +126,7 @@ public class GameManager : MonoBehaviour
         Pawn playerTank = SpawnTank(tankPrefab, spawnPosition);
 
         controllerToPossess.Possess(playerTank);
+        controllerToPossess.SetupControls();
         controllerToPossess.updateHealth();
     }
 
@@ -187,6 +196,46 @@ public class GameManager : MonoBehaviour
     }
 
     #endregion
+
+    #region Cleanup and Removal
+
+    public void ClearAfterGameAssets()
+    {
+        //Destroy all objects respectfully
+        foreach (Controller controller in inactivePlayers)
+        {
+            Destroy(controller.gameObject);
+        }
+
+        foreach (Controller controller in aIs)
+        {
+            Destroy(controller.gameObject);
+        }
+
+        foreach (Pawn tankPawn in tanks)
+        {
+            Destroy(tankPawn.gameObject);
+        }
+
+        //Clear lists afterwards
+        players.Clear();
+        aIs.Clear();
+        tanks.Clear();
+    }
+
+    public void DestroyPlayer(Controller pawnToDestroy)
+    {
+        players.Remove(pawnToDestroy);
+        inactivePlayers.Add(pawnToDestroy);
+        tanks.Remove(pawnToDestroy.pawn);
+
+        Destroy(pawnToDestroy.pawn.gameObject);
+
+        if (players.Count == 0) RevealSpecificState("GameOverMenu");
+    }
+
+    #endregion
+
 
     public void CloseApplication()
     {

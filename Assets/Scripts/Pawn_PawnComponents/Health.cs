@@ -53,6 +53,11 @@ public class Health : MonoBehaviour
     public void Die()
     {
         Debug.Log($"{gameObject.name} has Perished ;w;");
+
+        CameraScript playerCam = GetComponentInChildren<CameraScript>();
+        Debug.Log(playerCam);
+        if (playerCam != null) playerCam.transform.SetParent(parentPawn.controller.transform, true);
+
         Destroy(gameObject);
     }
 }

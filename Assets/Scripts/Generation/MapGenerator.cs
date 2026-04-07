@@ -125,11 +125,6 @@ public class MapGenerator : MonoBehaviour
         throw arguement;
     }
 
-    public void deleteMap()
-    {
-        mapLogic.deleteMap(genType);
-    }
-
     #endregion
 
     #region Maze Generation Logic
@@ -308,7 +303,7 @@ public class MapGenerator : MonoBehaviour
             return;
         }
 
-        if (int.TryParse(seedInput.text, out int result))
+        if (Int64.TryParse(seedInput.text, out Int64 result))
         {
             seedInput.textComponent.color = Color.black;
 
@@ -367,6 +362,7 @@ public class MapGenerator : MonoBehaviour
 
             else
             {
+                mapLogic.seed = (uint)result; //Grab the value of the input
                 InitializeRandomSeed();
                 GameManager.instance.HideSpecificState("GameplaySetup");
             }
@@ -381,4 +377,13 @@ public class MapGenerator : MonoBehaviour
     }
 
     #endregion Generation Setup and Execution
+
+    #region Generation Deletion
+
+    public void DeleteMap()
+    {
+        mapLogic.deleteMap(genType);
+    }
+
+    #endregion
 }

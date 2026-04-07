@@ -31,14 +31,14 @@ public class GameUIPlayer : UIBase
 
             if (player.lives <= 0)
             {
-                Debug.Log("Game Over");
+                Debug.Log($"Game Over for {name}");
 
                 for (int i = 0; i < 3; i++)
                 {
                     lifeSprites[i].color = Color.red;
                 }
 
-                GameManager.instance.ChangeState("GameOverMenu");
+                GameManager.instance.DestroyPlayer(player);
             }
             else
             {
