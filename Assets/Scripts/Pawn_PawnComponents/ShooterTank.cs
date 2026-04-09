@@ -39,5 +39,8 @@ public class ShooterTank : Shooter
         //Push it forward
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
         rb.AddForce(muzzleTransform.forward * power);
+
+        //Play Audio
+        if (owner.pawn != null) owner.pawn.audioSource.PlayRandomSoundFromArray(0, 0);
     }
 }

@@ -5,7 +5,8 @@ public abstract class Pawn : MonoBehaviour
     [HideInInspector] public Controller controller;
     protected Mover mover;
     [HideInInspector] public Health health;
-    
+    [HideInInspector] public AudioPlayer audioSource;
+
 
     public Rigidbody rb;
 
@@ -27,5 +28,7 @@ public abstract class Pawn : MonoBehaviour
         mover = GetComponent<Mover>();
 
         health = GetComponent<Health>();
+
+        audioSource = GetComponentInChildren<AudioPlayer>();
     }
 }

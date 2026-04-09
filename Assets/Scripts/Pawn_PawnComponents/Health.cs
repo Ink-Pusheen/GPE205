@@ -26,13 +26,18 @@ public class Health : MonoBehaviour
     public void TakeDamage(float dmgTaken, Controller hitByController)
     {
         currentHealth -= dmgTaken;
-        Debug.Log("Taken Damage");
+
         //Clamp the hp between 0 and max
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
 
         //Check for death
         if (currentHealth <= 0)
         {
+            //Play the death sound, and delay the destruction of the object
+            parentPawn.audioSource.PlaySoundOneShot(0, 1, 1);
+            parentPawn.audioSource.QueueSelfDestruct(4);
+            parentPawn.audioSource.transform.SetParent(null, true);
+
             //Reward Points if this is an AI
             ControllerAI aiController = parentPawn.controller.GetComponent<ControllerAI>();
 
@@ -46,9 +51,14 @@ public class Health : MonoBehaviour
             //Perish
             Die();
         }
+        else
+        {
+            //Play the damage sound
+            parentPawn.audioSource.PlaySoundOneShot(0, 1, 0);
+        }
 
-        //Update the tank UI
-        parentPawn.controller.tankUI.updateHealthBar(currentHealth, maxHealth);
+            //Update the tank UI
+            parentPawn.controller.tankUI.updateHealthBar(currentHealth, maxHealth);
 
     }
 

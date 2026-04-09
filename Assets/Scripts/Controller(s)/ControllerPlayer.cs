@@ -84,7 +84,7 @@ public class ControllerPlayer : Controller
 
         if (devDamage.WasPressedThisFrame())
         {
-            //pawn.health.TakeDamage(5);
+            pawn.health.TakeDamage(5, null);
         }
     }
 

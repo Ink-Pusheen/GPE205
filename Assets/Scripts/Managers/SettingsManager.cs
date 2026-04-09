@@ -15,10 +15,6 @@ public class SettingsManager : MonoBehaviour
     public Slider musicSlider;
     public Slider sfxSlider;
 
-    [SerializeField] float mainVolume; //Float values respective 0 - 1f
-    [SerializeField] float musicVolume;
-    [SerializeField] float sfxVolume;
-
     //Json
     private string settingsJsonPath;
 
@@ -58,14 +54,11 @@ public class SettingsManager : MonoBehaviour
         string json = File.ReadAllText(settingsJsonPath);
         SettingsSave savedSettings = JsonUtility.FromJson<SettingsSave>(json);
 
-        mainVolume = savedSettings.savedMainVolume;
-        mainSlider.value = mainVolume;
+        mainSlider.value = savedSettings.savedMainVolume;
 
-        musicVolume = savedSettings.savedMusicVolume;
-        musicSlider.value = musicVolume;
+        musicSlider.value = savedSettings.savedMusicVolume;
 
-        sfxVolume = savedSettings.savedSFXVolume;
-        sfxSlider.value = sfxVolume;
+        sfxSlider.value = savedSettings.savedSFXVolume;
 
         //Update the sliders
         OnMainSliderChange();

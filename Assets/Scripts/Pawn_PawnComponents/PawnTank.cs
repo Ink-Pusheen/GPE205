@@ -9,12 +9,13 @@ public class PawnTank : Pawn
 
     protected Shooter shooter;
     
+    
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public override void Awake()
     {
         
-
+        
         shooter = GetComponent<Shooter>();
 
         //Do what all pawns do

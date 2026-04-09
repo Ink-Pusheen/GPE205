@@ -35,4 +35,9 @@ public class AudioPlayer : MonoBehaviour
 
         else return MusicMixer;
     }
+
+    public void QueueSelfDestruct(float timeToDestroy)
+    {
+        Destroy(gameObject, timeToDestroy);
+    }
 }

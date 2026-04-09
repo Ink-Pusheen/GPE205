@@ -141,6 +141,8 @@ public class GameManager : MonoBehaviour
         controllerToPossess.Possess(playerTank);
         controllerToPossess.SetupControls();
         controllerToPossess.updateHealth();
+
+        if(spawnPosition.name == "New Game Object") Destroy(spawnPosition);
     }
 
     public ControllerAI SpawnEnemy(GameObject enemyPrefab)

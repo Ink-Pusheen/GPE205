@@ -636,9 +636,6 @@ MonoBehaviour:
   mainSlider: {fileID: 1505596226549365647}
   musicSlider: {fileID: 1505596226549365649}
   sfxSlider: {fileID: 1505596226549365648}
-  mainVolume: 0
-  musicVolume: 0
-  sfxVolume: 0
 --- !u!4 &1377226001
 Transform:
   m_ObjectHideFlags: 0
@@ -856,6 +853,10 @@ PrefabInstance:
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1377226000}
+    - target: {fileID: 1083036948088754224, guid: 45348cea729b9c744aff8d6168ffca87, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1162287341012707198, guid: 45348cea729b9c744aff8d6168ffca87, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1016,6 +1017,14 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 807986746}
+    - target: {fileID: 4044330819583912973, guid: 45348cea729b9c744aff8d6168ffca87, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4554975216985835206, guid: 45348cea729b9c744aff8d6168ffca87, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4781029550797130553, guid: 45348cea729b9c744aff8d6168ffca87, type: 3}
       propertyPath: m_Name
       value: GameStates
