@@ -4,10 +4,10 @@ public class Health : MonoBehaviour
 {
     [Header("Variables")]
 
-    [HideInInspector] public float currentHealth;
+     public float currentHealth;
     public float maxHealth;
 
-    private Pawn parentPawn;
+    [SerializeField] private Pawn parentPawn;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -23,7 +23,7 @@ public class Health : MonoBehaviour
         
     }
 
-    public void TakeDamage(float dmgTaken)
+    public void TakeDamage(float dmgTaken, Controller hitByController)
     {
         currentHealth -= dmgTaken;
         Debug.Log("Taken Damage");
@@ -31,12 +31,25 @@ public class Health : MonoBehaviour
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
 
         //Check for death
-        if (currentHealth <= 0) Die();
+        if (currentHealth <= 0)
+        {
+            //Reward Points if this is an AI
+            ControllerAI aiController = parentPawn.controller.GetComponent<ControllerAI>();
+
+            if (aiController != null)
+            {
+                Controller rewardedOwner = hitByController;
+                rewardedOwner.scoredPoints += 100;
+                rewardedOwner.updateScore();
+            }
+
+            //Perish
+            Die();
+        }
 
         //Update the tank UI
-        if(parentPawn != null) parentPawn.controller.tankUI.updateHealthBar(currentHealth, maxHealth);
+        parentPawn.controller.tankUI.updateHealthBar(currentHealth, maxHealth);
 
-        
     }
 
     public void Heal(float healthGained)

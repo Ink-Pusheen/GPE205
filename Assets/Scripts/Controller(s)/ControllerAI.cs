@@ -31,7 +31,7 @@ public class ControllerAI : Controller
         transitionChangeTime = Time.deltaTime; //Debug.Log(transitionChangeTime);
 
         //Temp testing
-        //Possess(this.pawn);
+        Possess(this.pawn);
     }
 
     public void ChangeState(AIState newState)
@@ -168,6 +168,6 @@ public class ControllerAI : Controller
     {
         base.Possess(pawnToPossess);
 
-        tankUI = pawn.GetComponent<UIBase>();
+        tankUI = pawn.GetComponentInChildren<UIBase>();
     }
 }

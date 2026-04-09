@@ -1,6 +1,12 @@
 using UnityEngine;
 using UnityEngine.Audio;
 
+public class test
+{
+    public int num1;
+    int num2;
+}
+
 public class AudioPlayer : MonoBehaviour
 {
     public AudioplayerLogic AudioLogic;
@@ -11,6 +17,16 @@ public class AudioPlayer : MonoBehaviour
     public void PlaySoundOneShot(int chosenMixer, int soundArray, int soundIndex)
     {
         AudioLogic.PlaySoundOneShot(ReturnMixer(chosenMixer), soundArray, soundIndex);
+    }
+
+    public void PlayRandomSoundFromArray(int chosenMixer, int soundArray)
+    {
+        AudioLogic.PlayRandomSoundFromArray(ReturnMixer(chosenMixer), soundArray);
+    }
+
+    public void MenuClick()
+    {
+        AudioLogic.PlayRandomSoundFromArray(ReturnMixer(0), 0);
     }
 
     private AudioSource ReturnMixer(int chosenMixer)

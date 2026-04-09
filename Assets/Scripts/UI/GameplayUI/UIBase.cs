@@ -21,4 +21,9 @@ public class UIBase : MonoBehaviour
     {
         healthBar.fillAmount = newHealth / maxHealth;
     }
+
+    public virtual void UpdateScore(int newScore)
+    {
+
+    }
 }

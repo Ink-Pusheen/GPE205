@@ -6,10 +6,12 @@ public class ShooterTank : Shooter
 {
     [SerializeField] AudioMixer mixer;
 
+    [SerializeField] Controller owner;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        owner = transform.GetComponent<Pawn>().controller;
     }
 
     // Update is called once per frame
@@ -30,14 +32,12 @@ public class ShooterTank : Shooter
 
     public override void Fire(float power)
     {
-        //Instantiate the bullet at the muzzle and rotation
+        //Instantiate the bullet at the muzzle and rotation and the owner
         GameObject bullet = Instantiate(bulletPrefab, muzzleTransform.position, muzzleTransform.rotation);
-
+        bullet.GetComponent<DamageOtherOnOverlap>().owner = owner;
+        
         //Push it forward
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
         rb.AddForce(muzzleTransform.forward * power);
-
-        //Set the owner
-        bullet.GetComponent<Projectile>().setOwner(pawn.gameObject);
     }
 }

@@ -62,27 +62,39 @@ public class GameManager : MonoBehaviour
     {
         //For testing purposes
         if (!generatePlayer) return;
-        GameObject zero = new GameObject("Zero");
-        zero.transform.position = Vector3.zero;
 
-        StartGame(zero);
-
-        Destroy(zero); //Temp
+        StartGame();
     }
 
-    public void StartGame(GameObject spawnPoint)
+    public void StartGame()
     {
-        //Do premature checks for setup
+        if (MapGenerator.instance.mapLogic.playerMultiplayer)
+        {
+            for (int i = 0; i < 2; i++)
+            {
+                //Spawn a tank pawn (and store it in tanks)
+                Pawn playerTank = SpawnTank(tankPrefab, MapGenerator.instance.SpawnPlayerPos());
 
-        //Spawn a tank pawn (and store it in tanks)
-        Pawn playerTank = SpawnTank(tankPrefab, spawnPoint);
+                //Spawn a player controller (and store it in players)
+                Controller playerController = SpawnPlayer(playerControllerPrefab, i + 1);
 
-        //Spawn a player controller (and store it in players)
-        Controller playerController = SpawnPlayer(playerControllerPrefab);
+                //Have the player posses the pawn
+                playerController.Possess(playerTank);
+                playerController.SetupControls();
+            }
+        }
+        else
+        {
+            //Spawn a tank pawn (and store it in tanks)
+            Pawn playerTank = SpawnTank(tankPrefab, MapGenerator.instance.SpawnPlayerPos());
 
-        //Have the player posses the pawn
-        playerController.Possess(playerTank);
-        playerController.SetupControls();
+            //Spawn a player controller (and store it in players)
+            Controller playerController = SpawnPlayer(playerControllerPrefab, 1);
+
+            //Have the player posses the pawn
+            playerController.Possess(playerTank);
+            playerController.SetupControls();
+        }
     }
 
     #region Tank Spawning
@@ -113,9 +125,10 @@ public class GameManager : MonoBehaviour
         return tempTankPawn;
     }
 
-    public Controller SpawnPlayer(GameObject playerPrefab)
+    public Controller SpawnPlayer(GameObject playerPrefab, int spawnIndex)
     {
         GameObject playerSpawn = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity);
+        playerSpawn.name = $"Player{spawnIndex}";
         Controller playerController = playerSpawn.GetComponent<Controller>();
 
         return playerController;
@@ -193,6 +206,8 @@ public class GameManager : MonoBehaviour
         }
 
         if (newState == "Gameplay") RevealSpecificState("GameplaySetup");
+
+        if (newState == "SettingsMenu") SettingsManager.instance.LoadJson();
     }
 
     #endregion

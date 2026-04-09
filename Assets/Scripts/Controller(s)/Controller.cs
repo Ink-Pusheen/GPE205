@@ -7,6 +7,7 @@ public abstract class Controller : MonoBehaviour
     public UIBase tankUI;
 
     public int lives;
+    public int scoredPoints = 0;
 
     public virtual void Awake()
     {
@@ -38,7 +39,15 @@ public abstract class Controller : MonoBehaviour
     {
         if (pawn == null) throw new ArgumentException("Error, pawn null");
         if (tankUI == null) throw new ArgumentException("Error, UI null");
-        //tankUI.updateHealthBar(pawn.health.currentHealth, pawn.health.maxHealth);
+
         tankUI.updateHealthBar(1, 1);
+    }
+
+    public void updateScore()
+    {
+        if (pawn == null) throw new ArgumentException("Error, pawn null");
+        if (tankUI == null) throw new ArgumentException("Error, UI null");
+
+        tankUI.UpdateScore(scoredPoints);
     }
 }

@@ -3,10 +3,11 @@ using UnityEngine;
 [RequireComponent(typeof(Collider))]
 public class DamageOtherOnOverlap : MonoBehaviour
 {
-    private GameObject owner;
+    public Controller owner;
 
     public float damage;
     private Collider mCol;
+
 
     private void Awake()
     {
@@ -18,20 +19,18 @@ public class DamageOtherOnOverlap : MonoBehaviour
     {
         mCol = GetComponent<Collider>();
         mCol.isTrigger = true;
-
-        owner = transform.GetComponent<Projectile>().owner;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject == owner || other.CompareTag("DoorCheck")) return;
+        if (other.gameObject == owner || other.CompareTag("DoorCheck") || other.CompareTag("Pickup")) return;
 
         //Get the other objects health component to see if it exists
         Health hp = other.GetComponent<Health>();
 
         if (hp != null)
         {
-            hp.TakeDamage(damage);
+            hp.TakeDamage(damage, owner);
         }
 
         //Destroy this gameobject

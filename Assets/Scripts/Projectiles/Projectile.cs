@@ -7,12 +7,7 @@ public class Projectile : MonoBehaviour
 
     [SerializeField] private int damage;
 
-    public GameObject owner;
-
-    public void setOwner(GameObject setOwner)
-    {
-        owner = setOwner;
-    }
+    public Controller owner;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

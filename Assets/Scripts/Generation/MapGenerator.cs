@@ -10,6 +10,9 @@ public enum RandomType { Random, Seeded, MapOfTheDay}
 public enum GenType { Grid, MazeLike }
 public class MapGenerator : MonoBehaviour
 {
+    //Static
+    public static MapGenerator instance;
+
     [Header("Random Data")]
     public RandomType randomType;
     public GenType genType;
@@ -23,6 +26,21 @@ public class MapGenerator : MonoBehaviour
     [SerializeField] Image mapOfTheDayImage;
     [SerializeField] GameObject warningPopup;
     [SerializeField] TMP_Text warningText;
+    [SerializeField] Image multiplayerToggleImage;
+
+    private void Start()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
+    }
 
     public void InitializeRandomSeed()
     {
@@ -213,24 +231,26 @@ public class MapGenerator : MonoBehaviour
             GameManager.instance.EnemyInitialization(aiTankObject, aiController, aiSpawnPoint);
         }
 
-        SpawnPlayer();
+        //Signal the game manager to start
+        GameManager.instance.StartGame();
     }
 
-    public void SpawnPlayer()
+    public GameObject SpawnPlayerPos()
     {
         if (mapLogic.playerSpawnChoices.Count == 0)
         {
             GameObject spawn = new GameObject();
             spawn.transform.position = Vector3.zero;
 
-            GameManager.instance.SpawnPlayer(spawn);
+            //Initiate to start the game
+            return spawn;
         }
         else
         {
             int chosenSpawn = GameManager.instance.rng.NextInt(0, mapLogic.playerSpawnChoices.Count);
             GameObject playerSpawn = mapLogic.playerSpawnChoices[chosenSpawn];
 
-            GameManager.instance.StartGame(playerSpawn);
+            return playerSpawn;
         }
     }
 
@@ -255,6 +275,20 @@ public class MapGenerator : MonoBehaviour
     #endregion Tank Spawning
 
     #region Generation Setup and Execution
+
+    public void ToggleMultiplayer()
+    {
+        mapLogic.playerMultiplayer = !mapLogic.playerMultiplayer;
+
+        if (mapLogic.playerMultiplayer)
+        {
+            multiplayerToggleImage.color = Color.green;
+        }
+        else
+        {
+            multiplayerToggleImage.color = Color.red;
+        }
+    }
 
     public void SwitchGenType()
     {

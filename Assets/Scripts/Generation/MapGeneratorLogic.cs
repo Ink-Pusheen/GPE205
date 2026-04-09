@@ -42,6 +42,10 @@ public class MapGeneratorLogic
     public GameObject[] aiTankObjects;
     public GameObject[] aiControllers; //Roamer, Rusher, Sniper, Smoke Screen 
 
+    [Header("Multiplayer")]
+
+    public bool playerMultiplayer;
+
     public void InitializeRandomSeed(RandomType randomGenType, MapGenerator mapGen)
     {
         setupOdds();

@@ -21,6 +21,8 @@ public class ControllerPlayer : Controller
 
     [SerializeField] float tankSpeed;
 
+    public int playerIndex;
+
     public override void Awake()
     {
         base.Awake();
@@ -32,6 +34,9 @@ public class ControllerPlayer : Controller
 
         //Get the player Camera
         cam = GetComponentInChildren<CameraScript>();
+
+        //Get the player input
+        pI = GetComponent<PlayerInput>(); //Gets the player Input and actions
     }
 
     private void Start()
@@ -79,7 +84,7 @@ public class ControllerPlayer : Controller
 
         if (devDamage.WasPressedThisFrame())
         {
-            pawn.health.TakeDamage(5);
+            //pawn.health.TakeDamage(5);
         }
     }
 
@@ -87,7 +92,7 @@ public class ControllerPlayer : Controller
     {
         rbTank = pawn.rb;
 
-        pI = GetComponent<PlayerInput>(); //Gets the player Input and actions
+        pI.SwitchCurrentActionMap(name);
 
         rotateTank = pI.actions.FindAction("Rotate");
 
@@ -114,5 +119,24 @@ public class ControllerPlayer : Controller
 
         cam.SetPosition(); //Set the position and rotation
         cam.transform.SetParent(pawn.transform, false);
+
+        //Multiplayer changes
+        if (MapGenerator.instance.mapLogic.playerMultiplayer)
+        {
+            switch (name)
+            {
+                case "Player1":
+
+                    cam.GetComponent<Camera>().rect = new Rect(0, 0.5f, 1, 0.5f);
+
+                    break;
+
+                case "Player2":
+
+                    cam.GetComponent<Camera>().rect = new Rect(0, 0, 1, 0.5f);
+
+                    break; 
+            }
+        }
     }
 }

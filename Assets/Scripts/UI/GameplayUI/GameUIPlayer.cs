@@ -1,4 +1,5 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,6 +8,8 @@ public class GameUIPlayer : UIBase
     private ControllerPlayer player;
 
     [SerializeField] Image[] lifeSprites;
+
+    [SerializeField] TMP_Text scoreText;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -52,6 +55,11 @@ public class GameUIPlayer : UIBase
                 StartCoroutine(DelaySpawn());
             }
         }
+    }
+
+    public override void UpdateScore(int newScore)
+    {
+        scoreText.text = $"Score: {newScore}";
     }
 
 
