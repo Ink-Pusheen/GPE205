@@ -33,4 +33,9 @@ public class MoverTank : Mover
         //Rotate over time towards new rotation
         transform.rotation = Quaternion.RotateTowards(transform.rotation, rotation, pawn.rotationSpeed * Time.deltaTime);
     }
+
+    public override void QuaternionRotateTowards(Quaternion rotation)
+    {
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, rotation, pawn.rotationSpeed * Time.deltaTime);
+    }
 }

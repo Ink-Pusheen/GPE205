@@ -9,6 +9,8 @@ public abstract class Controller : MonoBehaviour
     public int lives;
     public int scoredPoints = 0;
 
+    public Transform playerTarget;
+
     public virtual void Awake()
     {
         tankUI = GetComponent<UIBase>();

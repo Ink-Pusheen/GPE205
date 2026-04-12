@@ -54,7 +54,7 @@ public class Health : MonoBehaviour
         else
         {
             //Play the damage sound
-            parentPawn.audioSource.PlaySoundOneShot(0, 1, 0);
+            if(parentPawn.audioSource != null) parentPawn.audioSource.PlaySoundOneShot(0, 1, 0);
         }
 
             //Update the tank UI

@@ -20,6 +20,7 @@ public abstract class Pawn : MonoBehaviour
     public abstract void Flip();
     public abstract void Shoot(float power);
     public abstract void RotateTowards(Vector3 position);
+    public abstract void  QuaternionRotateTowards(Quaternion rotation);
 
     public virtual void Awake()
     {

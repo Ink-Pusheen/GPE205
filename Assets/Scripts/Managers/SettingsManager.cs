@@ -38,6 +38,32 @@ public class SettingsManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+
+        if (File.Exists(settingsJsonPath))
+        {
+            UpdateMixers();
+        }
+    }
+
+    private void UpdateMixers()
+    {
+        string json = File.ReadAllText(settingsJsonPath);
+        SettingsSave savedSettings = JsonUtility.FromJson<SettingsSave>(json);
+
+        float masterVol = 0;
+        if (savedSettings.savedMainVolume == 0) masterVol = 0;
+        else masterVol = Mathf.Log10(savedSettings.savedMainVolume) * 20;
+        MasterMixer.SetFloat("MainVolume", masterVol);
+
+        float musicVol = 0;
+        if (savedSettings.savedMainVolume == 0) musicVol = 0;
+        else musicVol = Mathf.Log10(savedSettings.savedMusicVolume) * 20;
+        MasterMixer.SetFloat("MusicVolume", musicVol);
+
+        float sfxVol = 0;
+        if (savedSettings.savedMainVolume == 0) sfxVol = 0;
+        else sfxVol = Mathf.Log10(savedSettings.savedSFXVolume) * 20;
+        MasterMixer.SetFloat("SFXVolume", sfxVol);
     }
 
     public void LoadJson()

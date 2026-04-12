@@ -8,6 +8,8 @@ public class GameUIPlayer : UIBase
     private ControllerPlayer player;
 
     [SerializeField] Image[] lifeSprites;
+    [SerializeField] Sprite lifeSprite;
+    [SerializeField] Sprite deadSprite;
 
     [SerializeField] TMP_Text scoreText;
 
@@ -38,7 +40,7 @@ public class GameUIPlayer : UIBase
 
                 for (int i = 0; i < 3; i++)
                 {
-                    lifeSprites[i].color = Color.red;
+                    lifeSprites[i].sprite = deadSprite;
                 }
 
                 GameManager.instance.DestroyPlayer(player);
@@ -47,9 +49,9 @@ public class GameUIPlayer : UIBase
             {
                 for (int i = 0; i < 3; i++)
                 {
-                    if (i < player.lives) lifeSprites[i].color = Color.green;
+                    if (i < player.lives) lifeSprites[i].sprite = lifeSprite;
 
-                    else lifeSprites[i].color = Color.red;
+                    else lifeSprites[i].sprite = deadSprite;
                 }
 
                 StartCoroutine(DelaySpawn());

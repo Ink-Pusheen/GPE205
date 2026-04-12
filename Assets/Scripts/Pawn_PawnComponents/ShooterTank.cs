@@ -41,6 +41,6 @@ public class ShooterTank : Shooter
         rb.AddForce(muzzleTransform.forward * power);
 
         //Play Audio
-        if (owner.pawn != null) owner.pawn.audioSource.PlayRandomSoundFromArray(0, 0);
+        if (owner.pawn.audioSource != null) owner.pawn.audioSource.PlayRandomSoundFromArray(0, 0);
     }
 }

@@ -95,6 +95,11 @@ public class GameManager : MonoBehaviour
             playerController.Possess(playerTank);
             playerController.SetupControls();
         }
+
+        foreach (Controller enemyAI in aIs)
+        {
+            enemyAI.playerTarget = players[0].pawn.gameObject.transform;
+        }
     }
 
     #region Tank Spawning
@@ -143,6 +148,11 @@ public class GameManager : MonoBehaviour
         controllerToPossess.updateHealth();
 
         if(spawnPosition.name == "New Game Object") Destroy(spawnPosition);
+
+        foreach (Controller enemyAI in aIs)
+        {
+            enemyAI.playerTarget = players[0].pawn.gameObject.transform;
+        }
     }
 
     public ControllerAI SpawnEnemy(GameObject enemyPrefab)
@@ -154,6 +164,22 @@ public class GameManager : MonoBehaviour
     }
 
     #endregion Tank Spawning
+
+    #region List Updates
+
+    public void RemoveAiTankController(Controller inControllerToRemove)
+    {
+        aIs.Remove(inControllerToRemove);
+
+        //Check if there are any remaining
+        //If none, queue the win screen
+        if (aIs.Count == 0)
+        {
+            Debug.Log("Win");
+        }
+    }
+
+    #endregion
 
     #region Game State Swapping
 
@@ -249,6 +275,14 @@ public class GameManager : MonoBehaviour
         Destroy(pawnToDestroy.pawn.gameObject);
 
         if (players.Count == 0) RevealSpecificState("GameOverMenu");
+
+        else
+        {
+            foreach (Controller enemyAI in aIs)
+            {
+                enemyAI.playerTarget = players[0].pawn.gameObject.transform;
+            }
+        }
     }
 
     #endregion

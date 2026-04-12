@@ -14,6 +14,11 @@ public class PowerUp_Health : PowerUp
 
             //Call to the health component to heal the specified amount
             target.health.Heal(healthToHeal);
+
+            float newHealth = target.health.currentHealth;
+            float maxHealth = target.health.maxHealth;
+
+            target.controller.tankUI.updateHealthBar(newHealth, maxHealth);
         }
     }
 

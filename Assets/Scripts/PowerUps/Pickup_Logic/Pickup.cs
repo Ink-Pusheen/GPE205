@@ -3,19 +3,25 @@ using UnityEngine;
 [RequireComponent (typeof(Collider))]
 public abstract class Pickup : MonoBehaviour
 {
+    [SerializeField] Vector3 rotateVector = new Vector3(0, 1, 0);
+
+    public AudioPlayer audioPlayer;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public virtual void Start()
     {
         //Set collider to be a trigger
         Collider selfCollider = GetComponent<Collider>();
         if (selfCollider != null) selfCollider.isTrigger = true;
+
+        audioPlayer = GetComponentInChildren<AudioPlayer>();
     }
 
     // Update is called once per frame
     public virtual void Update()
     {
         //TODO: Anything our pickup does every frame draw
-        transform.Rotate(0, 1, 0);
+        transform.Rotate(rotateVector);
     }
 
     public void OnTriggerEnter(Collider other)

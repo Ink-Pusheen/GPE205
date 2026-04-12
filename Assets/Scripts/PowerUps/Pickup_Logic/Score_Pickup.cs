@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class Pickup_SpeedBoost : Pickup
+public class Score_Pickup : Pickup
 {
-    public PowerUp_MoveSpeed pickup;
+    public PowerUp_Score powerup;
 
     public override void ApplyPowerup(PowerupManager PUM, GameObject pickupHost)
     {
@@ -14,7 +14,8 @@ public class Pickup_SpeedBoost : Pickup
             audioPlayer.QueueSelfDestruct(4);
         }
 
-        PUM.ApplyPowerup(pickup);
+        PUM.ApplyPowerup(powerup);
+
         Destroy(pickupHost);
     }
 }

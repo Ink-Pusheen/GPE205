@@ -1,21 +1,22 @@
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public enum AIState
 {
-    ChooseRoamDirection, Roam, Attack, TurnAndShoot, Flee, Chase, Idle, Patrol
+    ChooseRoamDirection, Roam, Attack, TurnAndShoot, Flee, Chase, Idle, Patrol, Rotate
 }
 
 public class ControllerAI : Controller
 {
     [Header("Variables")]
 
-    private Quaternion roamDirection = Quaternion.identity;
+    [SerializeField] protected Quaternion roamDirection = Quaternion.identity;
 
-    private float transitionChangeTime;
+    protected float transitionChangeTime;
 
-    protected AIState currentState = AIState.Roam;
+    [SerializeField] protected AIState currentState = AIState.Roam;
 
-    public Transform playerTarget;
+    
 
     public float fleeDistance;
 
@@ -31,16 +32,24 @@ public class ControllerAI : Controller
         transitionChangeTime = Time.deltaTime; //Debug.Log(transitionChangeTime);
 
         //Temp testing
-        Possess(this.pawn);
+        //Possess(this.pawn);
+
+        
+    }
+
+    private void Start()
+    {
+        //Add this to the AI List
+        GameManager.instance.aIs.Add(this);
     }
 
     public void ChangeState(AIState newState)
     {
-        //Change the current state
-        currentState = newState;
-
         //Save the time we changed states
         transitionChangeTime = Time.time;
+
+        //Change the current state
+        currentState = newState;
     }
 
     public override void MakeDecisions()
@@ -57,8 +66,22 @@ public class ControllerAI : Controller
     {
         //TODO: Raycast forward for the distance it'll move in one frame draw
         //TODO: If it hits something, return false, else return true;
-        //Ray ray = new Ray();
+        RaycastHit hit;
 
+        //TODO: Field of view check
+
+
+        Vector3 vectorToTarget = pawn.transform.forward;
+        if (Physics.Raycast(pawn.transform.position + new Vector3(0, 0.25f, 0), vectorToTarget, out hit, distance))
+        {
+            if (hit.collider.gameObject != null && hit.collider.gameObject != pawn)
+            {
+                //Debug.Log(hit.collider.gameObject.name);
+                return false;
+            }
+        }
+
+        //Else return false
         return true;
     }
 
@@ -100,6 +123,7 @@ public class ControllerAI : Controller
         Vector3 vectorToTarget = target.transform.position - pawn.transform.position;
         if (Physics.Raycast(pawn.transform.position, vectorToTarget, out hit, visionDistance))
         {
+            //Debug.Log(hit.transform.gameObject.name);
             if (hit.collider.gameObject == target) return true;
         }
 
@@ -124,15 +148,6 @@ public class ControllerAI : Controller
 
         //Otherwise, return false
         return false;
-    }
-
-    public void DoChase()
-    {
-        //Find the vector to the player
-        Vector3 targetAngle = playerTarget.position - pawn.transform.position;
-
-        //Move  the calculated direction
-        pawn.Move(targetAngle);
     }
 
     public void DoFlee()

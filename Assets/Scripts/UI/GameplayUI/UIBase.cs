@@ -20,6 +20,8 @@ public class UIBase : MonoBehaviour
     public virtual void updateHealthBar(float newHealth, float maxHealth)
     {
         healthBar.fillAmount = newHealth / maxHealth;
+
+        healthBar.color = Color.Lerp(Color.red, Color.green, healthBar.fillAmount);
     }
 
     public virtual void UpdateScore(int newScore)

@@ -73,6 +73,11 @@ public class PawnTank : Pawn
         mover.RotateTowards(position);
     }
 
+    public override void QuaternionRotateTowards(Quaternion rotation)
+    {
+        mover.QuaternionRotateTowards(rotation);
+    }
+
     // Update is called once per frame
     void Update()
     {
