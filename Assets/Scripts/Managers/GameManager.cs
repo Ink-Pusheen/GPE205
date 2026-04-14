@@ -98,7 +98,7 @@ public class GameManager : MonoBehaviour
 
         foreach (Controller enemyAI in aIs)
         {
-            enemyAI.playerTarget = players[0].pawn.gameObject.transform;
+            enemyAI.playerTarget = players[0].pawn.gameObject;
         }
     }
 
@@ -124,7 +124,7 @@ public class GameManager : MonoBehaviour
 
     public Pawn SpawnTank(GameObject tankPrefab, GameObject spawnPosition)
     {
-        GameObject pawnSpawn = Instantiate(tankPrefab, spawnPosition.transform.position, spawnPosition.transform.rotation);
+        GameObject pawnSpawn = Instantiate(tankPrefab, spawnPosition.transform.position, spawnPosition.transform.rotation, null);
         Pawn tempTankPawn = pawnSpawn.GetComponent<Pawn>();
 
         return tempTankPawn;
@@ -132,7 +132,7 @@ public class GameManager : MonoBehaviour
 
     public Controller SpawnPlayer(GameObject playerPrefab, int spawnIndex)
     {
-        GameObject playerSpawn = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity);
+        GameObject playerSpawn = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity, null);
         playerSpawn.name = $"Player{spawnIndex}";
         Controller playerController = playerSpawn.GetComponent<Controller>();
 
@@ -151,7 +151,7 @@ public class GameManager : MonoBehaviour
 
         foreach (Controller enemyAI in aIs)
         {
-            enemyAI.playerTarget = players[0].pawn.gameObject.transform;
+            enemyAI.playerTarget = players[0].pawn.gameObject;
         }
     }
 
@@ -280,7 +280,7 @@ public class GameManager : MonoBehaviour
         {
             foreach (Controller enemyAI in aIs)
             {
-                enemyAI.playerTarget = players[0].pawn.gameObject.transform;
+                enemyAI.playerTarget = players[0].pawn.gameObject;
             }
         }
     }

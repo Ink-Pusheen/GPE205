@@ -1174,6 +1174,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4751247804980911113, guid: 45348cea729b9c744aff8d6168ffca87, type: 3}
+      propertyPath: mapLogic.mapRows
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4751247804980911113, guid: 45348cea729b9c744aff8d6168ffca87, type: 3}
+      propertyPath: mapLogic.mapColumns
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 4781029550797130553, guid: 45348cea729b9c744aff8d6168ffca87, type: 3}
       propertyPath: m_Name
       value: GameStates

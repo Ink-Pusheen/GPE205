@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 using static UnityEngine.GraphicsBuffer;
 
 public enum AIState
@@ -74,7 +75,7 @@ public class ControllerAI : Controller
         Vector3 vectorToTarget = pawn.transform.forward;
         if (Physics.Raycast(pawn.transform.position + new Vector3(0, 0.25f, 0), vectorToTarget, out hit, distance))
         {
-            if (hit.collider.gameObject != null && hit.collider.gameObject != pawn)
+            if (hit.collider.gameObject != null && hit.collider.gameObject != this.pawn)
             {
                 //Debug.Log(hit.collider.gameObject.name);
                 return false;
@@ -85,13 +86,20 @@ public class ControllerAI : Controller
         return true;
     }
 
-    public bool IsObjectInRange(Transform objectToCheck, float range)
+    public bool IsObjectInRange(GameObject objectToCheck, float range)
     {
         //Find the distance between the target and self pawn
         //If that is < range, return true, else return false
 
-        if (Vector3.Distance(objectToCheck.position, transform.position) < range) return true;
+        //Vector3 offset = objectToCheck.transform.position - transform.position;
+        float dist = Vector3.Distance(objectToCheck.transform.position, pawn.transform.position);
 
+        if (dist < range)
+        {
+            //Debug.Log(Vector3.Distance(objectToCheck.transform.position, transform.position));
+            return true;
+        }
+        Debug.Log(dist);
         return false; //No need for an else here as the prior 'return' already exited the function.
     }
 
@@ -123,8 +131,15 @@ public class ControllerAI : Controller
         Vector3 vectorToTarget = target.transform.position - pawn.transform.position;
         if (Physics.Raycast(pawn.transform.position, vectorToTarget, out hit, visionDistance))
         {
-            //Debug.Log(hit.transform.gameObject.name);
-            if (hit.collider.gameObject == target) return true;
+            if (hit.collider.gameObject == target)
+            {
+                Debug.Log("Player");
+                return true;
+            }
+        }
+        else
+        {
+            Debug.Log(hit.collider.name);
         }
 
         //Else return false
@@ -154,7 +169,7 @@ public class ControllerAI : Controller
     {
         //TODO: Whatever is in case Flee
         //Find a vector to the player
-        Vector3 vectorToTarget = pawn.transform.position - playerTarget.position;
+        Vector3 vectorToTarget = pawn.transform.position - playerTarget.transform.position;
 
         float distanceToPlayer = vectorToTarget.magnitude; //Distance between
 

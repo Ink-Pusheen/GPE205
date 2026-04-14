@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class ControllerAI_Rusher : ControllerAI
@@ -27,7 +28,7 @@ public class ControllerAI_Rusher : ControllerAI
 
                 //Check for transitions
 
-                if (IsObjectInRange(playerTarget, visionDistance) && CanSee(playerTarget.gameObject))
+                if (IsObjectInRange(playerTarget, visionDistance) && CanSee(playerTarget))
                 {
                     ChangeState(AIState.TurnAndShoot);
                 }
@@ -42,9 +43,9 @@ public class ControllerAI_Rusher : ControllerAI
                 //Rotate to that direction and move forward
 
                 DoRoam();
-
+                if (playerTarget == null) throw new ArgumentException("Player null, throw");
                 //Check for transitions
-                if (IsObjectInRange(playerTarget, visionDistance) && CanSee(playerTarget.gameObject))
+                if (IsObjectInRange(playerTarget, visionDistance) && CanSee(playerTarget))
                 {
                     ChangeState(AIState.TurnAndShoot);
                 }
@@ -65,7 +66,7 @@ public class ControllerAI_Rusher : ControllerAI
 
                 //Check for transitions
 
-                if (!CanSee(playerTarget.gameObject)) ChangeState(AIState.Roam);
+                if (!CanSee(playerTarget)) ChangeState(AIState.Roam);
 
                 break;
 
@@ -76,7 +77,7 @@ public class ControllerAI_Rusher : ControllerAI
 
                 //Check for transitions
 
-                if (!CanSee(playerTarget.gameObject)) ChangeState(AIState.ChooseRoamDirection);
+                if (!CanSee(playerTarget)) ChangeState(AIState.ChooseRoamDirection);
 
                 if (!IsObjectInRange(playerTarget, visionDistance)) ChangeState(AIState.Roam);
 
@@ -100,7 +101,7 @@ public class ControllerAI_Rusher : ControllerAI
                 //Check for transitions
                 if (IsObjectInRange(playerTarget, visionDistance)) ChangeState(AIState.TurnAndShoot);
 
-                if (!CanSee(playerTarget.gameObject)) ChangeState(AIState.Roam);
+                if (!CanSee(playerTarget)) ChangeState(AIState.Roam);
 
                 break;
 
@@ -110,10 +111,6 @@ public class ControllerAI_Rusher : ControllerAI
                 DoIdle();
 
                 //Check for transitions
-
-                if (playerTarget != null && IsObjectInRange(playerTarget, visionDistance) && CanSee(playerTarget.gameObject))
-                    ChangeState(AIState.TurnAndShoot);
-
                 if (Time.time > transitionChangeTime + 5) ChangeState(AIState.ChooseRoamDirection);
 
                 break;
@@ -125,7 +122,7 @@ public class ControllerAI_Rusher : ControllerAI
 
                 //Check for transitions
 
-                if (IsObjectInRange(playerTarget, visionDistance) && CanSee(playerTarget.gameObject))
+                if (IsObjectInRange(playerTarget, visionDistance) && CanSee(playerTarget))
                     ChangeState(AIState.TurnAndShoot);
 
                 if (!CanMoveForward(2)) ChangeState(AIState.ChooseRoamDirection);
@@ -136,9 +133,9 @@ public class ControllerAI_Rusher : ControllerAI
                 //Rotate the tank
 
                 DoQuaternionRotate();
-
+                if (playerTarget == null) throw new ArgumentException("Player null, throw");
                 //Check for Transitions
-                if (IsObjectInRange(playerTarget, visionDistance) && CanSee(playerTarget.gameObject))
+                if (IsObjectInRange(playerTarget, visionDistance))
                     ChangeState(AIState.TurnAndShoot);
 
                 if (Time.time > transitionChangeTime + 2) ChangeState(AIState.Roam);
@@ -153,7 +150,7 @@ public class ControllerAI_Rusher : ControllerAI
     {
         //TODO: Whatever is in case ChooseRoamDirection
         //Set a random rotation
-        Quaternion newRotation = Quaternion.Euler(transform.position.x, Random.Range(0, 360), transform.position.z);
+        Quaternion newRotation = Quaternion.Euler(transform.position.x, UnityEngine.Random.Range(0, 360), transform.position.z);
 
         roamDirection = newRotation;
     }
@@ -176,7 +173,7 @@ public class ControllerAI_Rusher : ControllerAI
     {
         //TODO:Whatever is in case TurnAndShoot
         //Rotate towards player
-        pawn.RotateTowards(playerTarget.position);
+        pawn.RotateTowards(playerTarget.transform.position);
 
         //Shoot
         pawn.Shoot(pawn.shootPower);
@@ -186,7 +183,7 @@ public class ControllerAI_Rusher : ControllerAI
     {
         //TODO: Whatever is in case Chase
         //Turn towards chase target
-        pawn.RotateTowards(playerTarget.position);
+        pawn.RotateTowards(playerTarget.transform.position);
 
         //Move forward
         pawn.Move(new Vector3(0, 0, 1));

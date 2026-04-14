@@ -45,8 +45,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ControllerAI_SmokeScreen
   pawn: {fileID: 0}
+  tankUI: {fileID: 0}
+  lives: 0
+  scoredPoints: 0
   playerTarget: {fileID: 0}
+  roamDirection: {x: 0, y: 0, z: 0, w: 1}
+  currentState: 6
   fleeDistance: 0
   hearingDistance: 10
-  visionDistance: 10
+  visionDistance: 12
   fovAngle: 60
+  roamPoints: []

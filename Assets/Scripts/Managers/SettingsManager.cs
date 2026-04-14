@@ -23,7 +23,7 @@ public class SettingsManager : MonoBehaviour
         //Load json
         settingsJsonPath = Application.persistentDataPath + "/" + "Settings.json";
 
-        LoadJson();
+        //LoadJson();
     }
 
     private void Start()
@@ -51,18 +51,21 @@ public class SettingsManager : MonoBehaviour
         SettingsSave savedSettings = JsonUtility.FromJson<SettingsSave>(json);
 
         float masterVol = 0;
-        if (savedSettings.savedMainVolume == 0) masterVol = 0;
+        if (savedSettings.savedMainVolume == 0) masterVol = -80;
         else masterVol = Mathf.Log10(savedSettings.savedMainVolume) * 20;
+
         MasterMixer.SetFloat("MainVolume", masterVol);
 
         float musicVol = 0;
-        if (savedSettings.savedMainVolume == 0) musicVol = 0;
+        if (savedSettings.savedMusicVolume == 0) musicVol = -80;
         else musicVol = Mathf.Log10(savedSettings.savedMusicVolume) * 20;
+
         MasterMixer.SetFloat("MusicVolume", musicVol);
 
         float sfxVol = 0;
-        if (savedSettings.savedMainVolume == 0) sfxVol = 0;
+        if (savedSettings.savedSFXVolume == 0) sfxVol = -80;
         else sfxVol = Mathf.Log10(savedSettings.savedSFXVolume) * 20;
+
         MasterMixer.SetFloat("SFXVolume", sfxVol);
     }
 
